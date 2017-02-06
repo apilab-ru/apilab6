@@ -1,3 +1,4 @@
+<?
 class db {
     
     protected static $connect = null;
@@ -7,24 +8,24 @@ class db {
             require($_SERVER['DOCUMENT_ROOT'] . '/libs/DbSimple/Generic.php');
             self::$connect = DbSimple_Generic::connect("mysql://" . sql_user . ":" . sql_pass . "@" . sql_host . "/" . sql_table);
             if(!self::$connect){
-                die("Нет подключения к бд");
+                die("РќРµС‚ РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє Р±Рґ");
             }
             self::$connect->query("SET NAMES UTF8");
         }
         return self::$connect;
     }
     
-    //Меняем функции query
+    //РњРµРЅСЏРµРј С„СѓРЅРєС†РёРё query
     static function query() {
         $res = call_user_func_array(array(self::getConnect(), 'query'), func_get_args());
         return $res;
     }
-    //Меняем функции select 
+    //РњРµРЅСЏРµРј С„СѓРЅРєС†РёРё select 
     static function select() {
         $res = call_user_func_array(array(self::getConnect(), 'select'), func_get_args());
         return $res;
     }
-    //По умолчанию вызовы пойдут в библиотеку
+    //РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІС‹Р·РѕРІС‹ РїРѕР№РґСѓС‚ РІ Р±РёР±Р»РёРѕС‚РµРєСѓ
     static function __callStatic($name, $arguments) {
         if(method_exists(self, $name)){
             return call_user_func_array(array(self, $name), $arguments);
