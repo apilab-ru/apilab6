@@ -1,8 +1,8 @@
 <?php
 return [
     "user"=>"root",
-    "host"=>"local",
+    "host"=>"localhost",
     "pass"=>"",
-    "table"=>""
+    "table"=>"jqd6"
 ];
 

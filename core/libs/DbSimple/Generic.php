@@ -591,10 +591,12 @@ class DbSimple_Generic_Database extends DbSimple_Generic_LastError
             // Run the query (counting time).
             $qStart = $this->_microtime();        
             $result = $this->_performQuery($query);
+            
             $fetchTime = $firstFetchTime = 0;
 
-            if (is_resource($result)) {
+            if (is_object($result)) {
                 $rows = array();
+                
                 // Fetch result row by row.
                 $fStart = $this->_microtime();
                 $row = $this->_performFetch($result);
@@ -646,7 +648,7 @@ class DbSimple_Generic_Database extends DbSimple_Generic_LastError
             $this->_transformQuery($query, 'GET_TOTAL');
             $total = call_user_func_array(array(&$this, 'selectCell'), $query);
         }
-
+        
         return $result;
     }
     

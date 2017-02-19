@@ -11,7 +11,7 @@ class View{
     
     function render($tpl,$args=null){
         $this->sm->assign($args);
-        $this->sm->display($tpl);
+        return $this->sm->fetch("app:".$tpl);
     }
     
 }

@@ -5,17 +5,41 @@ namespace core\utils;
 class DataBase{
     
     public $db;
+    public $setLog = 0;
     
     function __construct($param){
-        /*include __DIR__ ."/../libs/DbSimple/SqlLite.php";
-        $this->db = new \DbSimple_Sqlite("mysql://{$param['user']}:{$param['pass']}@{$param['host']}/{$param['table']}");
-        $this->db->query("SET NAMES UTF8");*/
+        include __DIR__ ."/../libs/DbSimple/Generic.php";
+        $this->db = \DbSimple_Generic::connect("mysqli://{$param['user']}:{$param['pass']}@{$param['host']}/{$param['table']}");
+        $this->db->query("SET NAMES UTF8");
+    }
+    
+    function setLogger($set=1){
+        if($set){
+           $this->db->setLogger([$this,'logger']); 
+        }else{
+            $this->db->setLogger('');
+        }
+    }
+    
+    function logger($db, $sql){
+        $this->setLogger(0);
+        $caller = $this->db->findLibraryCaller();
+        $this->insert("log",array(
+            'name'=>"sql call at {$caller['file']} line {$caller['line']}",
+            'log'=>$sql
+        ));
+        
+        $this->setLogger(1);
     }
     
     function select(){
         $args = func_get_args();
-        $res = call_user_func_array([$this->db,'select'], $args);
-        return $res;
+        return call_user_func_array([$this->db,'select'], $args);
+    }
+    
+    function selectRow(){
+        $args = func_get_args();
+        return call_user_func_array([$this->db,'selectRow'], $args);
     }
     
     function query(){
@@ -25,6 +49,6 @@ class DataBase{
     }
     
     function insert($table,$row){
-        return $this->db->query('insert into `$table` (?#) values (?a)',array_keys($row),array_values($row));
+        return $this->db->query('insert into ?# (?#) values (?a)',$table,array_keys($row),array_values($row));
     }
 }

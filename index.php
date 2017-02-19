@@ -1,9 +1,12 @@
 <?php
 $config = include "config/config.php";
 
-include "core/Application.php";
+define("APP_DIR", dirname(__FILE__));
+define("DEVELOP", 1);
+
+include "core/Core.php";
 include "core/Utils.php";
 
 include "core/autoloader.php";
 
-(new core\Application($config))->run();
+(new core\Core($config))->run();

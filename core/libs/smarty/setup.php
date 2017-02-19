@@ -3,6 +3,25 @@
 define(SMARTY_DIR, __DIR__."/"); // указываем путь до библиотеки Smarty
 require_once __DIR__.'/Smarty.class.php';
 
+function appGetTemplate($tpl_name, &$tpl_source, $smarty) {
+    $tpl_source = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/" . $tpl_name);
+    return true;
+}
+
+function appGetTimestamp($tpl_name, &$tpl_timestamp, $smarty) {
+    $tpl_timestamp = filemtime ($_SERVER['DOCUMENT_ROOT'] . "/" . $tpl_name);
+    return true;
+}
+
+function appGetSecure($tpl_name, $smarty) {
+    // предполагаем, что шаблоны безопасны
+    return true;
+}
+
+function appGetTrusted($tpl_name, &$smarty) {
+    // не используется для шаблонов
+}
+
 /*
 function db_sm_get_template($tpl_name, &$tpl_source, $smarty) {
     // выполняем обращение к базе данных для получения шаблона
@@ -45,24 +64,7 @@ function db_sm_get_trusted($tpl_name, &$smarty) {
 
 //  content
 
-function c_sm_get_template($tpl_name, &$tpl_source, $smarty) {
-    $tpl_source = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/custom/templates/' . $tpl_name . '.tpl');
-    return true;
-}
 
-function c_sm_get_timestamp($tpl_name, &$tpl_timestamp, $smarty) {
-    $tpl_timestamp = 0;
-    return true;
-}
-
-function c_sm_get_secure($tpl_name, $smarty) {
-    // предполагаем, что шаблоны безопасны
-    return true;
-}
-
-function c_sm_get_trusted($tpl_name, &$smarty) {
-    // не используется для шаблонов
-}
 
 // Engine
 
@@ -97,6 +99,13 @@ function initSmarty() {
     $sm->cache_dir = $_SERVER['DOCUMENT_ROOT'] . '/cache/';
     $sm->caching = false;
 
+    $sm->registerResource("app",[
+        "appGetTemplate",
+        "appGetTimestamp",
+        "appGetSecure",
+        "appGetTrusted"
+    ]);
+    
     /*$sm->registerResource("db", array("db_sm_get_template",
         "db_sm_get_timestamp",
         "db_sm_get_secure",
