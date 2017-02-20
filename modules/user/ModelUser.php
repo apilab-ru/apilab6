@@ -1,16 +1,17 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace modules\user;
 
-/**
- * Description of ModelUser
- *
- * @author Dekim
- */
-class ModelUser {
-    //put your code here
+class ModelUser extends \core\models\ModelBase{
+    
+    function getUser($login,$pass){
+        $this->db->setLogger(1);
+        return $this->db->selectRow("select * from user where mail=? && pass=?",$login,md5($pass));
+    }
+    
+    function auth($user){
+        session_start();
+        $_SESSION['user'] = $user;
+    }
+    
 }

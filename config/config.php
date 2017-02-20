@@ -10,7 +10,9 @@ return [
     "actions"=>[
         "content"=>["core\utils\Files","actionGet"],
         "admin"  =>["modules\admin","route"],
-        "in" =>["modules\user\ControllerUser","actionAuth"]
+        "in" =>["modules\user\ControllerUser","actionAuth"],
+        "ajax"=>"ajax",
+        "module"=>"module"
     ],
     "css"=>[
         "core" => include './core/css.php',
