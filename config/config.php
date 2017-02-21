@@ -9,8 +9,8 @@ return [
     ],
     "actions"=>[
         "content"=>["core\utils\Files","actionGet"],
-        "admin"  =>["modules\admin","route"],
-        "in" =>["modules\user\ControllerUser","actionAuth"],
+        "admin"  =>["modules\admin\Controller","route"],
+        "in" =>["modules\user\Controller","actionAuth"],
         "ajax"=>"ajax",
         "module"=>"module"
     ],

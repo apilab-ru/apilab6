@@ -3,16 +3,20 @@
 namespace modules\user;
 use core\controllers\ControllerBase;
 
-class ControllerUser extends ControllerBase{
+class Controller extends ControllerBase{
     
     function __construct() {
-        $this->model = new ModelUser();
+        $this->model = new Model();
+    }
+    
+    function startSession(){
+        session_start();
+        //pr($_COOKIE);
     }
     
     function actionAuth(){
-        
+        //pr($_COOKIE);
         if($_SESSION['user']){
-            //pr($_SESSION);
             echo $this->render('profile',$_SESSION['user']);
         }else{
             echo $this->render('auth');
@@ -22,8 +26,10 @@ class ControllerUser extends ControllerBase{
     function ajaxAuth($send){
         $user = $this->model->getUser($send['login'],$send['password']);
         if($user){
-            $this->model->auth($user);
-            return array('stat'=>1);
+            return array(
+                'stat'=>1,
+                'cookie'=>$this->model->auth($user,$send['remember'])
+            );
         }else{
             return array('error'=>'Некорректный логин / Пароль');
         }

@@ -15,6 +15,6 @@ function dlog($name,$arg){
     
     \core\Core::$app->db()->insert('log',[
         'name' => $name,
-        'arg'  => $arg
+        'log'  => $arg
     ]);
 }

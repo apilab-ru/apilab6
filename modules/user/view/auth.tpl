@@ -14,7 +14,7 @@
             border-radius: 3px;
             background: linear-gradient(to bottom, #e0e0e0 3%,#ffffff 52%); 
         }
-        input{
+        input[type=text],input[type=password]{
             display: block;
             margin: 10px 0;
             padding: 0 20px;
@@ -47,12 +47,41 @@
             border:2px solid red;
             padding: 20px;
         }
+        
+        label.checkbox span{
+            position: relative;
+        }
+        
+        label.checkbox span:before {
+            content: "";
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #ccc;
+            float: left;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+        label.checkbox input {
+            display: none;
+        }
+        label.checkbox input:checked + span:after{
+            content: "x";
+            position: absolute;
+            top: -2px;
+            left: -22px;
+            color: #136b84;
+        }
     </style>
     <body>
         <form>
             <h2> Авторизация </h2>
             <input type="text" name="login" id="name" placeholder="Логин">
             <input type="password" name="password" id="pass" placeholder="Пароль">
+            <label class="checkbox">
+                <input type="checkbox" name="remember" value="1" id="remember">
+                <span> Запомнить меня </span>
+            </label>
             <div class="submitLine">
                 <button> Войти </button>
             </div>
@@ -82,6 +111,10 @@
                 password: $('#pass').val()
             };
             
+            if($('#remember').prop('checked')){
+                form.remember = 1;
+            }
+            
             $.post("/ajax/user/auth", { send:form },
                 function (re, my) {
                     var tt = re.match(".*<ja>(.*?)<\/ja>.*");
@@ -91,9 +124,11 @@
                         mas = {};
                     }
                     
-                    console.log('result',mas,re);
-                    
                     if(mas.stat){
+                        
+                        if(mas.cookie){
+                            document.cookie = "apilabuser="+ mas.cookie +"; path=/;";
+                        }
                         window.location = "/";
                     }else{
                         $('#error').css({ display:'table' }).html(mas.error);

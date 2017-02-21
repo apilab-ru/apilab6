@@ -32,7 +32,10 @@ class Core{
         if($this->actions[$url[0]]){
             
             if($url[0] != 'content'){
-                session_start();
+                
+                $users = new \modules\user\Controller();
+                $users->startSession();
+                
             }
             
             $act = $this->actions[$url[0]];
@@ -44,7 +47,6 @@ class Core{
             }
             die();
         }
-        
         
         
         //pr('list',$list);
@@ -81,8 +83,7 @@ class Core{
     
     function ajax($url){
         $module = $url[1];
-        $controller = mb_convert_case($module, MB_CASE_TITLE, "UTF-8");
-        $name = "\\modules\\$module\Controller{$controller}";
+        $name = "\\modules\\$module\Controller";
         $model = new $name();
         $action = "ajax".mb_convert_case($url[2], MB_CASE_TITLE, "UTF-8");
         
@@ -99,8 +100,7 @@ class Core{
     
     function module($url){
         $module = $url[1];
-        $controller = mb_convert_case($module, MB_CASE_TITLE, "UTF-8");
-        $name = "\\modules\\$module\Controller{$controller}";
+        $name = "\\modules\\$module\Controller";
         $model = new $name();
         $action = "action".mb_convert_case($url[2], MB_CASE_TITLE, "UTF-8");
         
