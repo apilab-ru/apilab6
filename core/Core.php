@@ -9,6 +9,7 @@ class Core{
     static $app;
     
     public $css;
+    public $module;
     
     function __construct($config){
         
@@ -21,43 +22,37 @@ class Core{
         self::$app = $this;
         
         $this->css = $config['css'];
+        $this->js = $config['js'];
+        
+        $this->module = new controllers\Modules($config['modules']);
+        
     }
     
-    function run(){
+    function run()
+    {
         
         $url = $this->getUrl();
-        
-        //$list = self::$db->select("select * from article");
         
         if($this->actions[$url[0]]){
             
             if($url[0] != 'content'){
-                
-                $users = new \modules\user\Controller();
-                $users->startSession();
-                
+                $this->module->user->startSession();
             }
             
             $act = $this->actions[$url[0]];
             if(is_array($act)){
-                $class = new $act[0]();
+                $class = new $act[0]($this->config['modules'][$act[2]]);
                 $class->{$act[1]}($url);
             }else{
                 $this->$act($url);
             }
             die();
+            
+        }else{
+            $this->module->user->startSession();
         }
-        
-        
-        //pr('list',$list);
-        
-        //pr('fetch',$list->fetch_assoc());
-        
-        //pr($url,'Hello word!');
-        
-        //self::$view->render('modules/articles/views/test.tpl');
-        
     }
+    
     
     function getUrl(){
         return explode("/",$_REQUEST['path']);
@@ -81,14 +76,16 @@ class Core{
         return $this->css;
     }
     
+    function getJs(){
+        return $this->js;
+    }
+    
     function ajax($url){
         $module = $url[1];
-        $name = "\\modules\\$module\Controller";
-        $model = new $name();
         $action = "ajax".mb_convert_case($url[2], MB_CASE_TITLE, "UTF-8");
         
-        if(method_exists($model, $action)){
-            $res = $model->$action($_REQUEST['send']);
+        if(method_exists($this->module->$module, $action)){
+            $res = $this->module->$module->$action($_REQUEST['send']);
         }else{
             $res = ['error'=>'method not exist'];
         }
@@ -100,14 +97,16 @@ class Core{
     
     function module($url){
         $module = $url[1];
-        $name = "\\modules\\$module\Controller";
-        $model = new $name();
         $action = "action".mb_convert_case($url[2], MB_CASE_TITLE, "UTF-8");
         
-        if(method_exists($model, $action)){
-            $model->$action($url,$send);
+        if(method_exists($this->module->$module, $action)){
+            $this->module->$module->$action($url,$send);
         }else{
-            //echo 404
+            $this->error404();
         }
+    }
+    
+    function error404(){
+        echo "Нет такой страницы";
     }
 }

@@ -72,9 +72,12 @@
             left: -22px;
             color: #136b84;
         }
+        .vkAuth{
+            margin-top: 15px;
+        }
     </style>
     <body>
-        <form>
+        <form onsubmit="user.auth(this,event)">
             <h2> Авторизация </h2>
             <input type="text" name="login" id="name" placeholder="Логин">
             <input type="password" name="password" id="pass" placeholder="Пароль">
@@ -85,56 +88,21 @@
             <div class="submitLine">
                 <button> Войти </button>
             </div>
+            <div id="vk_auth" class="vkAuth"></div>
         </form>
         <div id="error"></div>
         
-            {*<script type="text/javascript" src="//vk.com/js/api/openapi.js?136"></script>
-
-            <script type="text/javascript">
-              VK.init({ apiId: 5732959 });
-            </script>
-
-            <div id="vk_auth"></div>
-            <script type="text/javascript">
-            VK.Widgets.Auth("vk_auth", { width: "200px", onAuth: function(data) {
-             alert('user '+data['uid']+' authorized');
-            } });
-            </script>*}
+        {if $vkapid}
+        <script type="text/javascript" src="//vk.com/js/api/openapi.js?139"></script>
+        <script type="text/javascript">
+          VK.init({ apiId: {$vkapid} });
+        </script>
+        <script type="text/javascript">
+        VK.Widgets.Auth("vk_auth", { width: "200px", onAuth: function(data){ user.vkAuth(data) } });
+        </script>
+        {/if}
         
     </body>
-    {utils name=js current='jqary'}
-    <script>
-        $('form').on('submit',function(e){
-            e.preventDefault();
-            var form = {
-                login: $('#name').val(),
-                password: $('#pass').val()
-            };
-            
-            if($('#remember').prop('checked')){
-                form.remember = 1;
-            }
-            
-            $.post("/ajax/user/auth", { send:form },
-                function (re, my) {
-                    var tt = re.match(".*<ja>(.*?)<\/ja>.*");
-                    if (tt != null) {
-                        var mas = $.parseJSON(tt[1]);
-                    } else {
-                        mas = {};
-                    }
-                    
-                    if(mas.stat){
-                        
-                        if(mas.cookie){
-                            document.cookie = "apilabuser="+ mas.cookie +"; path=/;";
-                        }
-                        window.location = "/";
-                    }else{
-                        $('#error').css({ display:'table' }).html(mas.error);
-                    }
-                });
-        })
-    </script>
+    {utils name=js}
 </html>
 {/strip}

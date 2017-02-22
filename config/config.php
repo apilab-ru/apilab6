@@ -9,13 +9,22 @@ return [
     ],
     "actions"=>[
         "content"=>["core\utils\Files","actionGet"],
-        "admin"  =>["modules\admin\Controller","route"],
-        "in" =>["modules\user\Controller","actionAuth"],
+        "admin"  =>["modules\admin\Controller","route",'admin'],
+        "in" =>["modules\user\Controller","actionAuth",'user'],
         "ajax"=>"ajax",
         "module"=>"module"
     ],
     "css"=>[
         "core" => include './core/css.php',
         "add"  => include 'css.php'
+    ],
+    "js"=>[
+        "core" => include './core/js.php',
+        "add"  => include 'js.php'
+    ],
+    "modules"=>[
+        "user"=>[
+            "vkapid"=>'3729990'
+        ]
     ]
 ];

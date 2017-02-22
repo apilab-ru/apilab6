@@ -21,4 +21,8 @@ class Model extends \core\models\ModelBase{
     function updateUser($id,$arr){
         $this->db->query("UPDATE `user` set ?a where id=?d",$arr,$id);
     }
+    
+    function getUserVk($vkId){
+        return $this->db->selectRow("select * from `user` where vk_id =?d",$vkId);
+    }
 }

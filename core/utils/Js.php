@@ -28,6 +28,13 @@ class Js {
             }
         }
         
+        $list = \core\Core::$app->getJs();
+        
+        $list = array_merge($list['core'],$list['add']);
+        
+        foreach($list as $item){
+            echo "<script src='{$item}'></script>";
+        }
     }
     
 }

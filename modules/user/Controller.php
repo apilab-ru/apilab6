@@ -5,21 +5,37 @@ use core\controllers\ControllerBase;
 
 class Controller extends ControllerBase{
     
-    function __construct() {
+    function __construct($set) {
+        $this->set = $set;
         $this->model = new Model();
     }
     
     function startSession(){
         session_start();
-        //pr($_COOKIE);
     }
     
-    function actionAuth(){
-        //pr($_COOKIE);
+    function ajaxAuthVk($send){
+        $vk = new \core\api\vk();
+        $userVk = $vk->authByWindget($send);
+            
+        $user = $this->model->getUserVk($userVk['vk_id']);
+        if($user){
+            $this->model->auth($user);
+            return ['action'=>'auth'];
+        }else{
+            $_SESSION['tmp_user'] = $userVk;
+            return ['action'=>'register'];
+        }
+    }
+    
+    function actionAuth($send){
+        
         if($_SESSION['user']){
             echo $this->render('profile',$_SESSION['user']);
         }else{
-            echo $this->render('auth');
+            echo $this->render('auth',[
+                'vkapid'=>$this->set['vkapid']
+            ]);
         }
     }
     
@@ -37,7 +53,14 @@ class Controller extends ControllerBase{
     
     function actionOut($url){
         session_destroy();
+        $_COOKIE['apilabuser'] = null;
         header("Location: /");
     }
+    
+    function actionRegisterUser($send=null){
+        pr($_SESSION['tmp_user']);
+        pr('reg user',$send);
+    }
+    
 }
 
