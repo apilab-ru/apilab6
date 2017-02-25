@@ -93,16 +93,19 @@
         <div id="error"></div>
         
         {if $vkapid}
-        <script type="text/javascript" src="//vk.com/js/api/openapi.js?139"></script>
-        <script type="text/javascript">
-          VK.init({ apiId: {$vkapid} });
-        </script>
-        <script type="text/javascript">
-        VK.Widgets.Auth("vk_auth", { width: "200px", onAuth: function(data){ user.vkAuth(data) } });
-        </script>
+            <script type="text/javascript" src="//vk.com/js/api/openapi.js?139"></script>
+            <script type="text/javascript">
+              VK.init({ apiId: {$vkapid} });
+            </script>
+            <script type="text/javascript">
+            VK.Widgets.Auth("vk_auth", { width: "200px", onAuth: function(data){ user.vkAuth(data) } });
+            </script>
         {/if}
         
     </body>
     {utils name=js}
+    <script>
+        user.from = "{$from}";
+    </script>
 </html>
 {/strip}

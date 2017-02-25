@@ -1,6 +1,6 @@
 <?php
 
 return [
-    "/source/css/bootstrap.min",
-    "/source/css/bootstrap-theme.min"
+    "/source/css/bootstrap.min.css",
+    "/source/css/bootstrap-theme.min.css"
 ];

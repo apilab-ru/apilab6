@@ -1,12 +1,13 @@
 function user(){
     this.name = "user";
     var self = this;
+    this.from = "/";
     
     this.vkAuth = function (data) {
 
         self.post('authVk', data, function (re, mas) {
             if (mas.action == 'auth') {
-                window.location = "/";
+                window.location = self.from;
             }
             if (mas.action == 'register') {
 
@@ -34,7 +35,7 @@ function user(){
                     var date = new Date(new Date().getTime() + 864000 * 1000);
                     document.cookie = "apilabuser=" + mas.cookie + "; path=/; expires: " + date.toUTCString();
                 }
-                window.location = "/";
+                window.location = self.from;
             } else {
                 $('#error').css({display: 'table'}).html(mas.error);
             }

@@ -1132,10 +1132,10 @@ class DbSimple_Generic_Database extends DbSimple_Generic_LastError
      * 
      * Prevent from direct creation of this object.
      */
-    function DbSimple_Generic_Database()
+    /*function DbSimple_Generic_Database()
     {
         die("This is protected constructor! Do not instantiate directly at ".__FILE__." line ".__LINE__);
-    }
+    }*/
     
     // Identifiers prefix (used for ?_ placeholder).
     var $_identPrefix = '';

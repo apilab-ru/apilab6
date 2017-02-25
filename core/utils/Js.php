@@ -13,24 +13,19 @@ namespace core\utils;
  *
  * @author Dekim
  */
-class Js {
+class Js 
+{
     
-    static function widget($param){
-        
-        if($param['current']){
-            if($param['current']=='jqary'){
-                if(DEVELOP){
-                    $src = '/source/js/jquery.min.js';
-                }else{
-                    $src = '//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js';
-                }
-                echo "<script src='{$src}'></script>";
-            }
-        }
+    static function widget($param)
+    {
         
         $list = \core\Core::$app->getJs();
         
-        $list = array_merge($list['core'],$list['add']);
+        if($param['module']){
+            $list = $list[ $param['module'] ];
+        }else{
+            $list = array_merge($list['core'],$list['add']);
+        }
         
         foreach($list as $item){
             echo "<script src='{$item}'></script>";

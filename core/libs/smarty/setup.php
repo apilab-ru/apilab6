@@ -4,12 +4,20 @@ define(SMARTY_DIR, __DIR__."/"); // указываем путь до библи�
 require_once __DIR__.'/Smarty.class.php';
 
 function appGetTemplate($tpl_name, &$tpl_source, $smarty) {
-    $tpl_source = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/" . $tpl_name);
+    $file = $_SERVER['DOCUMENT_ROOT'] . "/" . $tpl_name;
+    if(file_exists($file)){
+        $tpl_source = file_get_contents($file);
+    }else{
+        $tpl_source = "<div class='alert alert-danger'> Шаблон $tpl_name не найден </div>";
+    }
     return true;
 }
 
 function appGetTimestamp($tpl_name, &$tpl_timestamp, $smarty) {
-    $tpl_timestamp = filemtime ($_SERVER['DOCUMENT_ROOT'] . "/" . $tpl_name);
+    $file = $_SERVER['DOCUMENT_ROOT'] . "/" . $tpl_name;
+    if(file_exists($file)){
+        $tpl_timestamp = filemtime ($file);
+    }
     return true;
 }
 

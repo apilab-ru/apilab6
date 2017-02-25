@@ -9,7 +9,7 @@ return [
     ],
     "actions"=>[
         "content"=>["core\utils\Files","actionGet"],
-        "admin"  =>["modules\admin\Controller","route",'admin'],
+        "admin"  =>["modules\admin\Controller","actionIndex",'admin'],
         "in" =>["modules\user\Controller","actionAuth",'user'],
         "ajax"=>"ajax",
         "module"=>"module"
@@ -25,6 +25,11 @@ return [
     "modules"=>[
         "user"=>[
             "vkapid"=>'3729990'
+        ],
+        "admin"=>[],
+        "article"=>[
+            "limit"=>10
         ]
-    ]
+    ],
+    "version"=>"6.0.1"
 ];

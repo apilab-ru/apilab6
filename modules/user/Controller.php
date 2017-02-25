@@ -33,8 +33,12 @@ class Controller extends ControllerBase{
         if($_SESSION['user']){
             echo $this->render('profile',$_SESSION['user']);
         }else{
+            
+            $from = ($_REQUEST['from']) ? $_REQUEST['from'] : "/";
+            
             echo $this->render('auth',[
-                'vkapid'=>$this->set['vkapid']
+                'vkapid'=>$this->set['vkapid'],
+                'from' => $from
             ]);
         }
     }
@@ -60,6 +64,26 @@ class Controller extends ControllerBase{
     function actionRegisterUser($send=null){
         pr($_SESSION['tmp_user']);
         pr('reg user',$send);
+    }
+    
+    
+    function getAdminActions(){
+        
+        return [
+            "act"=>"list",
+            "name"=>"Сотрудники",
+            "icon"=>"admin-icon-users",
+            "description"=>'Управление пользователями сайта'
+        ];
+        
+    }
+    
+    function adminList($send){
+        $list = $this->model->getList();
+        //pr($list);
+        echo $this->render("admin/list",[
+            'list'=>$list
+        ]);
     }
     
 }

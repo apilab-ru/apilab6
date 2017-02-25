@@ -2,7 +2,8 @@
 
 namespace core\utils;
 
-class Files{
+class Files
+{
     
     public $dirOrig = '/content/images_orig/';
     public $dirCreated = '/content/images/';
@@ -14,16 +15,15 @@ class Files{
         3 => "Сохранение пропорций со смещённым центром"
     );        
             
-    function __construct() {
-        
-    }
     
-    function ActionGet($url){
+    function ActionGet($url)
+    {
         $method = "ActionGet".$url[1];
         $this->$method($url[2]);
     }
     
-    function ActionGetImages($link){
+    function ActionGetImages($link)
+    {
         $param = $this->parseParams($link);
         $path = $this->getImgPath($param['id'],$param['type']);
         
@@ -46,7 +46,8 @@ class Files{
         
     }
     
-    function saveImage($link,$type,$file){
+    function saveImage($link,$type,$file)
+    {
         $path = $_SERVER['DOCUMENT_ROOT'] . $this->dirCreated . $link;
         switch($type){
             case 'png':
@@ -61,7 +62,8 @@ class Files{
         }
     }
     
-    function echoImg($file,$mime,$type) {
+    function echoImg($file,$mime,$type) 
+    {
         header('Content-Type: '.$mime);
         switch($type){
             case 'png':
@@ -76,7 +78,8 @@ class Files{
         }
     }
     
-    function loadImage($path,$type) {
+    function loadImage($path,$type) 
+    {
         switch ($type) {
             case 'gif': 
                 return imagecreatefromgif($path);
@@ -91,7 +94,8 @@ class Files{
         }
     }
     
-    function getSize($path) {
+    function getSize($path) 
+    {
         $ar = getimagesize($path);
         
         $size = new \stdClass();
@@ -103,7 +107,8 @@ class Files{
         return $size;
     }
     
-    function getImgPath($id,$type){
+    function getImgPath($id,$type)
+    {
         $file = $_SERVER['DOCUMENT_ROOT'].$this->dirOrig."$id.$type";
         if(file_exists($file)){
             return $file;
@@ -113,13 +118,15 @@ class Files{
     }
     
     
-    function getTemplate($name){
+    function getTemplate($name)
+    {
         $template = \Core\Core::$app->db()->selectRow("select img_change_id as 'change',new_width as width,new_height as height"
                 . " from img_templates where alias = ?",$name);
         return $template;
     }
     
-    function parseParams($patch){
+    function parseParams($patch)
+    {
         $st = explode("_",$patch);
         $ex = explode(".",$st[1]);
         $tpl = $ex[0];
@@ -148,7 +155,8 @@ class Files{
         );
     }
     
-    function getTplSize($tpl,$sizeOrig) {
+    function getTplSize($tpl,$sizeOrig) 
+    {
         
         $sizeTpl = new \stdClass();
         
@@ -173,7 +181,8 @@ class Files{
         return $sizeTpl;
     }
     
-    function imgResize($file,$typeFile,$tpl,$sizeTpl,$sizeOrig) {
+    function imgResize($file,$typeFile,$tpl,$sizeTpl,$sizeOrig) 
+    {
         
         switch ($tpl['change']) {
             case 1:

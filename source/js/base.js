@@ -21,5 +21,39 @@ function base(){
         return hxr;
         
     }
+    
+    this.getFilter = function(){
+        var set = location.search.split();
+        if (set[1]) {
+            set = JSON.parse(set[1]);
+        } else {
+            set = {};
+        }
+        return set;
+    }
+    
+    
+    this.history = function(link,param,title){
+        
+        if(title){
+            $('title').html(title);
+        }
+        
+        if(link==null){
+            link = location.pathname;
+        }
+        
+         if(param){
+                var set = this.getFilter();
+                
+                $.each(param,function(key,it){
+                    set[key] = it;
+                });
+                
+                link += "?param="+JSON.stringify(set);
+            }
+        
+        history.replaceState(null, title, link);
+    }
 }
 base = new base();

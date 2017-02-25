@@ -11,7 +11,8 @@ class Core{
     public $css;
     public $module;
     
-    function __construct($config){
+    function __construct($config)
+    {
         
         $this->actions = $config['actions'];
         
@@ -54,40 +55,48 @@ class Core{
     }
     
     
-    function getUrl(){
+    function getUrl()
+    {
         return explode("/",$_REQUEST['path']);
     }
     
-    function db(){
+    function db()
+    {
         if(!self::$DataBase){
             self::$DataBase = new $this->config['db']['class']($this->config['db']['config']);
         }
         return self::$DataBase;
     }
     
-    function render($tpl,$args=null){
+    function render($tpl,$args=null)
+    {
         if(!self::$view){
             self::$view = new $this->config['view']['class']();
         }
         return self::$view->render($tpl,$args);
     }
     
-    function getCss(){
+    function getCss()
+    {
+        $this->initModules();
         return $this->css;
     }
     
-    function getJs(){
+    function getJs()
+    {
+        $this->initModules();
         return $this->js;
     }
     
-    function ajax($url){
+    function ajax($url)
+    {
         $module = $url[1];
         $action = "ajax".mb_convert_case($url[2], MB_CASE_TITLE, "UTF-8");
         
         if(method_exists($this->module->$module, $action)){
             $res = $this->module->$module->$action($_REQUEST['send']);
         }else{
-            $res = ['error'=>'method not exist'];
+            $res = ['error'=>"method $action not exist"];
         }
         
         if($res){
@@ -95,7 +104,8 @@ class Core{
         }
     }
     
-    function module($url){
+    function module($url)
+    {
         $module = $url[1];
         $action = "action".mb_convert_case($url[2], MB_CASE_TITLE, "UTF-8");
         
@@ -106,7 +116,40 @@ class Core{
         }
     }
     
-    function error404(){
+    function error404()
+    {
         echo "Нет такой страницы";
+    }
+    
+    public $modulesIsInit = 0;
+    
+    function initModules()
+    {
+        if($this->modulesIsInit == 0){
+            $this->modulesIsInit = 1;
+            foreach($this->config['modules'] as $module=>$conf){
+                $file =  APP_DIR . "/modules/".$module."/composer.php";
+                if(file_exists($file)){
+                    $set = include $file;
+                    foreach($set['source'] as $key=>$param){
+                        foreach($param as $type=>$list){
+                            foreach($list as $it){
+                                $this->{$type}[$key][] = $it;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    function getVersion()
+    {
+        return $this->config['version'];
+    }
+    
+    function getStruct($active=1,$full=0)
+    {
+        return $this->db()->select("select *,id as ARRAY_KEY,parent as PARENT_KEY from struct where alias !='_default' && active=$active");
     }
 }

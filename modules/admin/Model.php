@@ -1,8 +1,22 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace modules\admin;
+
+class Model extends \core\models\ModelBase
+{
+    
+    function getModulesActions()
+    {
+        $data = array();
+        
+        foreach(array_keys($this->core->config['modules']) as $module){
+            if(method_exists($this->core->module->$module, 'getAdminActions')){
+                $data[$module] = $this->core->module->$module->getAdminActions();
+            }
+        }
+        
+        return $data;
+    }
+    
+}
 

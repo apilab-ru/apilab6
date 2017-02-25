@@ -2,18 +2,21 @@
 
 namespace core\utils;
 
-class DataBase{
+class DataBase
+{
     
     public $db;
     public $setLog = 0;
     
-    function __construct($param){
+    function __construct($param)
+    {
         include __DIR__ ."/../libs/DbSimple/Generic.php";
         $this->db = \DbSimple_Generic::connect("mysqli://{$param['user']}:{$param['pass']}@{$param['host']}/{$param['table']}");
         $this->db->query("SET NAMES UTF8");
     }
     
-    function setLogger($set=1){
+    function setLogger($set=1)
+    {
         if($set){
            $this->db->setLogger([$this,'logger']); 
         }else{
@@ -21,7 +24,8 @@ class DataBase{
         }
     }
     
-    function logger($db, $sql){
+    function logger($db, $sql)
+    {
         $this->setLogger(0);
         $caller = $this->db->findLibraryCaller();
         $this->insert("log",array(
@@ -32,23 +36,33 @@ class DataBase{
         $this->setLogger(1);
     }
     
-    function select(){
+    function select()
+    {
         $args = func_get_args();
         return call_user_func_array([$this->db,'select'], $args);
     }
     
-    function selectRow(){
+    function selectRow()
+    {
         $args = func_get_args();
         return call_user_func_array([$this->db,'selectRow'], $args);
     }
     
-    function query(){
+    function selectCell()
+    {
+        $args = func_get_args();
+        return call_user_func_array([$this->db,'selectCell'], $args);
+    }
+    
+    function query()
+    {
         $args = func_get_args();
         $res = call_user_func_array([$this->db,'query'], $args);
         return $res;
     }
     
-    function insert($table,$row){
+    function insert($table,$row)
+    {
         return $this->db->query('insert into ?# (?#) values (?a)',$table,array_keys($row),array_values($row));
     }
 }
