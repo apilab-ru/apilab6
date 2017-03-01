@@ -19,16 +19,24 @@ class Js
     static function widget($param)
     {
         
-        $list = \core\Core::$app->getJs();
+        $data = \core\Core::$app->getJs();
         
         if($param['module']){
-            $list = $list[ $param['module'] ];
+            $list = $data[ $param['module'] ];
         }else{
-            $list = array_merge($list['core'],$list['add']);
+            $list = array_merge($data['core'],$data['add']);
         }
         
         foreach($list as $item){
             echo "<script src='{$item}'></script>";
+        }
+        
+        if(!$param['module']){
+        echo "<script>";  
+            foreach($data['plugin'] as $name=>$link){
+                echo "regRes.add('$name','$link')";
+            }
+        echo "</script>";
         }
     }
     

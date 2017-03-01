@@ -49,15 +49,14 @@ function admin(){
     
     this.pageModule = function(module,action){
         return function(id){
+            var prevLink = self.getLink();
             self.history('/admin/'+module + "/" + action,{id:id});
             self.post('getContent',{
                 module:module,
                 action:action,
-                param:id
+                param:{id:id},
+                prev:prevLink
             },function(re,mas){
-                
-                console.log('mas',mas);
-                
                 $('.boxContent').html(re);
             })
         }

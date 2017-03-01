@@ -8,10 +8,12 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Главная</a></li>
-        <li class="">Админка</li>
-        <li class="{if !$action}active{/if}">{$module}</li>
+        <li class=""><a href="/admin/"><u>Админка</u></a></li>
+        <li class="{if !$action}active{/if}">
+            {if $action}<a href="{$prev}"><u>{/if}{$module}{if $action}</u></a>{/if}
+        </li>
         {if $action}
-            <li class="active">{$action}</li>
+            <li class="active"><a href="">{$action}</a></li>
         {/if}
     </ol>
 </section>

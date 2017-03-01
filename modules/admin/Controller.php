@@ -31,11 +31,16 @@ class Controller extends \core\controllers\ControllerBase
         ]);
     }
     
-    function getContent($module=null,$action=null,$param=null)
+    function getContent($module=null,$action=null,$param=null,$prev=null)
     {
+        
+        //pr(func_get_args());
         
         if($module && $action){
             $content = $this->model->core->module->$module->admin($action,$param);
+            if($prev){
+                $content['prev'] = $prev;
+            }
         }
         
         return $this->render("content",$content);
@@ -43,7 +48,7 @@ class Controller extends \core\controllers\ControllerBase
     
     function ajaxGetContent($send)
     {
-        echo $this->getContent($send['module'],$send['action'],$send['param']);
+        echo $this->getContent($send['module'],$send['action'],$send['param'],$send['prev']);
     }
     
     function ajaxModule($send){

@@ -15,6 +15,9 @@ return [
                 "/modules/admin/source/js/app.js",
                 "/modules/admin/source/js/admin.js"
             ]
+        ],
+        "plugin"=>[
+            "js"=>["ckeditor"=>"/core/libs/ckeditor/ckeditor.js"]
         ]
     ]
 ];

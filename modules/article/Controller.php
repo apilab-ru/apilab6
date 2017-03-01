@@ -30,16 +30,18 @@ class Controller extends \core\controllers\ControllerBase
         echo $this->render('admin/listContent',$data);
     }
     
-    function adminEditArticle($id){
+    function adminEditArticle($param){
         
-        $article = $this->model->getArticle($id);
+        $article = $this->model->getArticle($param['id']);
         
         echo $this->render("admin/editArticle",[
             'article'=>$article
         ]);
         
         return [
-            'title'=>'Редактирование статьи'
+            'prev'=>'/admin/article/list',
+            'title'=>'Редактирование статьи',
+            'action'=>'Редактирование статьи ' . ( ($param['id'])?"#{$param['id']}":"" )
         ];
     }
 }

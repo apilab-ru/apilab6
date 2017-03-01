@@ -55,5 +55,90 @@ function base(){
         
         history.replaceState(null, title, link);
     }
+    
+    this.getLink = function(){
+        return location.pathname + location.search;
+    }
 }
 base = new base();
+
+
+var PageScripts = new (function () {
+    function fn() {
+        var self = this;
+
+        var loadStack = {};
+
+        var CallSuccess = function (h) {
+            if (h in loadStack) {
+                for (var i = 0; i < loadStack[h].length; i++) {
+                    loadStack[h][i]();
+                }
+                delete(loadStack[h]);
+            }
+        }
+
+        this.load = function (h, success, force) {
+            if (typeof (h) == 'string') {
+                if (typeof (success) == 'function') {
+                    if (!(h in loadStack)) {
+                        loadStack[h] = [];
+                    }
+                    loadStack[h].push(success);
+                }
+                var isLoad = false;
+                for (var i = 0; i < document.scripts.length; i++) {
+                    if (document.scripts[i].src) {
+                        if (new URL(document.scripts[i].src).pathname == h) {
+                            isLoad = i;
+                            break;
+                        }
+                    }
+                }
+                if (isLoad === false || force === true) {
+                    if (isLoad !== false) {
+                        $(document.scripts[isLoad].ownerNode).remove();
+                    }
+                    $.getScript(h + ((force) ? '?sum=' + ("0123456789".gen(3)) : ""), function () {
+                        CallSuccess(h);
+                    });
+                } else {
+                    CallSuccess(h);
+                }
+            } else if (typeof (h) == 'object' && h.constructor.name == 'Array') {
+                var l = 0;
+                var onload = function () {
+                    l++;
+                    if (l == h.length) {
+                        if (typeof (success) == 'function') {
+                            success();
+                        }
+                    }
+                }
+                for (var i = 0; i < h.length; i++) {
+                    self.load(h[i], onload, force);
+                }
+            }
+        }
+    }
+    return new fn();
+})();
+
+
+function regRes(){
+    var self = this;
+    
+    var aviable = {};
+    
+    var init = {};
+    
+    this.add = function(name,link){
+       aviable[name] = link; 
+    }
+    
+    this.load = function(name,callback){
+        PageScripts.load(aviable[name],callback);
+    }
+    
+}
+regRes = new regRes();

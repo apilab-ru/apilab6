@@ -133,8 +133,12 @@ class Core{
                     $set = include $file;
                     foreach($set['source'] as $key=>$param){
                         foreach($param as $type=>$list){
-                            foreach($list as $it){
-                                $this->{$type}[$key][] = $it;
+                            foreach($list as $name=>$it){
+                                if(is_string($name)){
+                                    $this->{$type}[$key][$name] = $it;
+                                }else{
+                                    $this->{$type}[$key][] = $it;
+                                }
                             }
                         }
                     }

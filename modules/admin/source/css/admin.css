@@ -42,12 +42,12 @@
 }
 
 .imgBox{
-    padding: 2px;
+    /*padding: 2px;*/
     box-sizing: border-box;
     display: table;
     margin: 0 auto;
     max-width: 220px;
-    border: 2px dashed #ccc;
+    /*border: 2px dashed #ccc;*/
 }
 .imgBox img{
     max-width: 100%;
