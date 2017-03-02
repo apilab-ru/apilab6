@@ -1,4 +1,4 @@
-<li {if $item.childNodes}class='treeview'{/if}>
+<li class='{if $item.childNodes}treeview{/if} {if $item.check}active{/if}'>
     <a myid="{$item.id}" onclick='{$func}({$item.id})'>
         <span> {$item.name} </span>
         {if $item.childNodes}

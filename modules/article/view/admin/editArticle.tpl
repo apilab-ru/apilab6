@@ -1,12 +1,4 @@
-<style>
-
-</style>
-<form class="editForm">
-    {*<div class="d-flex">
-    <div class="f-1">
-    <img src="{img id=0 type=jpg tpl=0x0}"/>
-    </div>
-    </div> *}
+<form class="editForm" onsubmit="article.saveArticle(this,event)">
     <div class="row">
         <div class="col-lg-4">
             <div class="panel panel-default">
@@ -79,6 +71,9 @@
                 <div class="panel-heading">
                     Теги
                 </div>
+                <div class="panel-body tegs">
+                    
+                </div>
             </div>
         </div>
         <div class="col-lg-4">
@@ -86,3 +81,8 @@
         </div>
     </div>
 </form>
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        article.initEditPage();
+    });
+</script>

@@ -64,6 +64,7 @@ class Model extends \core\models\ModelBase
     
     function getArticle($id){
         $art = $this->db->selectRow("select * from article where id=?d",$id);
+        
         return $art;
     }
 }

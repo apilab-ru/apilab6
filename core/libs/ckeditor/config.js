@@ -28,11 +28,15 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Remove some buttons provided by the standard plugins, which are
 	// not needed in the Standard(s) toolbar.
-	config.removeButtons = 'Underline,Subscript,Superscript';
+	removeButtons: 'Underline,Subscript,Superscript,About';
 
 	// Set the most common block elements.
 	config.format_tags = 'p;h1;h2;h3;pre';
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+        
+        config.filebrowserImageBrowseLinkUrl = "/modules/images/browser?act=linkUrl";
+        config.filebrowserImageBrowseUrl ='/modules/images/browser?act=browseUrl' ;
+        config.filebrowserImageUploadUrl = "/modules/images/upload/";
 };

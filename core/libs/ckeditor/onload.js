@@ -1,0 +1,3 @@
+regRes.waitLoad('CKEDITOR', function () {
+    
+})

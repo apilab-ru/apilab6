@@ -11,8 +11,11 @@ class ModelBase
         $this->core = \core\Core::$app;
     }
     
-    function extendFilter($set,$default)
+    function extendFilter($set,$default=null)
     {
+        if(!$default){
+            $default = $this->filter;
+        }
         if($set){
             foreach($set as $key=>$val){
                 $default[$key] = $val;

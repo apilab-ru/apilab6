@@ -29,6 +29,10 @@ return [
         "admin"=>[],
         "article"=>[
             "limit"=>10
+        ],
+        'files'=>[
+            "limit"=>20,
+            "struct"=>0
         ]
     ],
     "version"=>"6.0.1"

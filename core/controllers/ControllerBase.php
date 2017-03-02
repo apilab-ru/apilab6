@@ -32,7 +32,6 @@ abstract class ControllerBase
     
     function admin($act,$param=null)
     {
-        
         $actions = $this->getAdminActions();
         
         $method = "admin".$act;

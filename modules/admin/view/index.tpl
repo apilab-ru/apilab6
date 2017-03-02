@@ -223,18 +223,34 @@
       <ul class="sidebar-menu adminMenu">
         <li class="header">Модули</li>
         
-        
         {foreach from=$modulesActions item=item key=module}
             <li>
-                <a href="{$module}/{$item.act}">
+                <a {if $item.act}href="{$module}/{$item.act}"{/if}>
                     <i class="{$item.icon}"></i> 
                     <span>{$item.name}</span>
+                    {if $item.list}
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    {/if}
                 </a>
+                {if $item.list}
+                    <ul class="treeview-menu">
+                        {foreach from=$item.list item=item2}
+                        <li>
+                            <a href="{$module}/{$item2.act}">
+                                <i class="{$item2.icon}"></i> 
+                                <span>{$item2.name}</span>
+                            </a>
+                        </li>
+                        {/foreach}
+                    </ul>
+                {/if}
             </li>
         {/foreach}
         
         
-        <li class="treeview">
+        {*<li class="treeview">
           <a href="#">
             <i class="admin-icon-files"></i> <span>Файлы</span>
             <span class="pull-right-container">
@@ -251,7 +267,7 @@
             <li><a href="#">Документы</a></li>
             <li><a href="#">Галерея</a></li>
           </ul>
-        </li>
+        </li>*}
         {*<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
         <li class="treeview">

@@ -44,4 +44,4 @@ function user(){
     
 }
 user.prototype = base;
-user = new user;
+user = new user();

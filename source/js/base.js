@@ -140,5 +140,16 @@ function regRes(){
         PageScripts.load(aviable[name],callback);
     }
     
+    this.waitLoad = function(name,callback){
+        var func = function(){
+            if(name in window){
+                callback();
+            }else{
+                setTimeout(func,100);
+            }
+        }
+        
+        func();
+    }
 }
 regRes = new regRes();
