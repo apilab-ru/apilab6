@@ -17,7 +17,12 @@ return [
             ]
         ],
         "plugin"=>[
-            "js"=>["ckeditor"=>"/core/libs/ckeditor/ckeditor.js"]
+            "js"=>[
+                "ckeditor"=>[
+                    "/core/libs/ckeditor/setup.js",
+                    "/core/libs/ckeditor/ckeditor.js"
+                ]
+           ]
         ]
     ]
 ];

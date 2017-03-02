@@ -34,7 +34,7 @@ class Js
         if(!$param['module']){
         echo "<script>";  
             foreach($data['plugin'] as $name=>$link){
-                echo "regRes.add('$name','$link')";
+                echo "regRes.add('$name',".json_encode($link).")";
             }
         echo "</script>";
         }
