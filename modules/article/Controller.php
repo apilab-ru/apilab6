@@ -20,13 +20,30 @@ class Controller extends \core\controllers\ControllerBase
         
     }
     
-    function adminList($param){
+    function adminList($param = null){
         $data = $this->model->getListArticle($param);
+        if($param){
+            foreach($param as $key=>$item){
+                if(!$data[$key]){
+                    $data[$key] = $item;
+                }
+            }
+        }
+        if(!$data['struct']){
+            $data['struct'] = 0;
+        }
         echo $this->render('admin/list',$data);
     }
     
-    function adminAjaxListContent($param){
+    function adminAjaxListContent($param=null){
         $data = $this->model->getListArticle($param);
+        if($param){
+            foreach($param as $key=>$item){
+                if(!$data[$key]){
+                    $data[$key] = $item;
+                }
+            }
+        }
         echo $this->render('admin/listContent',$data);
     }
     
