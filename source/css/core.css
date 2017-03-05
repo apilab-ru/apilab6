@@ -1,0 +1,11 @@
+.customPaginator{
+    text-align: center;
+    border-top: 1px solid #ccc;
+    margin-top: 10px;
+}
+.customPaginator .pagination{
+    margin: 10px;
+}
+.customPaginator .pagination a{
+    cursor: pointer;
+}

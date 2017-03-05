@@ -1,0 +1,81 @@
+.listFiles{
+    display: flex;
+    flex-wrap: wrap;
+}
+.listFiles .item {
+    display: flex;
+    padding: 3px;
+    margin: 3px;
+    cursor: pointer;
+}
+.listFiles[mode='list'] .item .info{
+    display: block;
+}
+.listFiles[mode='list']{
+    display: block;
+}
+.listFiles .item .info{
+    padding: 10px;
+    display: none;
+    word-wrap: break-word;
+    flex: 1;
+}
+.listFiles .item.active {
+    background: #5aa6c7;
+}
+.listFiles .item .line{
+    display: flex;
+    padding: 3px;
+}
+.listFiles .item .line .name{
+    width: 100px;
+    font-weight: bold;
+    background: #ecf0f5;
+    padding: 3px 6px;
+    margin-right: 10px;
+}
+.listFiles .item .line  .descr{
+    background: #fff;
+    padding: 3px 6px;
+}
+
+.selectImgBox{
+    margin: 10px 0px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+}
+.selectImgBox .image{
+    width: 250px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+}
+
+.selectImgBox .uploadImageArea{
+    position: relative;
+    cursor: pointer;
+}
+.selectImgBox .uploadImageArea input{
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    top:0px;
+    left:0px;
+}
+.selectImgBox .image:empty{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    border:3px dashed #ccc;
+    z-index: 1;
+}
+.selectImgBox .image:empty:after{
+    content:" Загрузите картинку ";
+}
+.selectImgBox .uploadImageArea.drag .image{
+    background: #ecf0f5;
+}

@@ -2,30 +2,39 @@ function base(){
     
     this.post = function(action,send,callback){
         var hxr =  $.post("/ajax/"+this.name+"/"+action, {send: send},
-        function (re, my) {
-            var res = re.split('<ja>');
-            if (res[1] != undefined) {
-                var text = res[0];
-                res = res[1].split('</ja>');
-                text += res[1];
-                re = text;
-                var mas = $.parseJSON(res[0]);
-            } else {
-                var mas = {};
-            }
-
+        function (re) {
+            
+            var data = base.parseSend(re);
+            
             if (typeof (callback) == 'function') {
-                callback(re, mas)
+                callback(data.re, data.mas)
             }
         });
         return hxr;
         
     }
     
+    this.parseSend = function (re) {
+        var res = re.split('<ja>');
+        if (res[1] != undefined) {
+            var text = res[0];
+            res = res[1].split('</ja>');
+            text += res[1];
+            re = text;
+            var mas = $.parseJSON(res[0]);
+        } else {
+            var mas = {};
+        }
+        return {
+            re: re,
+            mas: mas
+        };
+    }
+    
     this.getFilter = function(){
-        var set = location.search.split();
+        var set = location.search.split("=");
         if (set[1]) {
-            set = JSON.parse(set[1]);
+            set = JSON.parse(decodeURIComponent(set[1]));
         } else {
             set = {};
         }
