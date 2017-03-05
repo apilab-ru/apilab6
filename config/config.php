@@ -31,7 +31,7 @@ return [
             "limit"=>10
         ],
         'files'=>[
-            "limit"=>20,
+            "limit"=>5,
             "struct"=>0
         ]
     ],

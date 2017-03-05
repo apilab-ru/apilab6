@@ -64,4 +64,15 @@ abstract class ControllerBase
         }
     }
     
+    function ext($data,$param){
+        if($param){
+            foreach($param as $key=>$it){
+                if(!$data[$key]){
+                    $data[$key] = $it;
+                }
+            }
+        }
+        return $data;
+    }
+    
 }

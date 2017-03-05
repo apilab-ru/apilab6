@@ -225,7 +225,7 @@
         
         {foreach from=$modulesActions item=item key=module}
             <li>
-                <a {if $item.act}href="{$module}/{$item.act}"{/if}>
+                <a {if $item.act}href="/admin/{$module}/{$item.act}"{/if}>
                     <i class="{$item.icon}"></i> 
                     <span>{$item.name}</span>
                     {if $item.list}
@@ -238,7 +238,7 @@
                     <ul class="treeview-menu">
                         {foreach from=$item.list item=item2}
                         <li>
-                            <a href="{$module}/{$item2.act}">
+                            <a href="/admin/{$module}/{$item2.act}">
                                 <i class="{$item2.icon}"></i> 
                                 <span>{$item2.name}</span>
                             </a>
@@ -248,39 +248,6 @@
                 {/if}
             </li>
         {/foreach}
-        
-        
-        {*<li class="treeview">
-          <a href="#">
-            <i class="admin-icon-files"></i> <span>Файлы</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li>
-                <a href="#">
-                    <i class="admin-icon-images"></i> <span>Картинки</span>
-                </a>
-            </li>
-            <li><a href="#">Шаблоны картинок</a></li>
-            <li><a href="#">Документы</a></li>
-            <li><a href="#">Галерея</a></li>
-          </ul>
-        </li>*}
-        {*<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>*}
         
       </ul>
       <!-- /.sidebar-menu -->

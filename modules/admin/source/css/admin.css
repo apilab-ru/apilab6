@@ -52,3 +52,10 @@
 .imgBox img{
     max-width: 100%;
 }
+
+.linkBox {
+    display: block;
+    padding: 2px;
+    margin-bottom: 2px;
+    cursor: pointer;
+}

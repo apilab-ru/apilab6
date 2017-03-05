@@ -39,17 +39,17 @@
                 
                 <td>
                     {if $actions.view}
-                    <a title="Просмотр">
+                    <a title="Просмотр" class="linkBox">
                         <span class="glyphicon glyphicon-eye-open"></span>
                     </a> 
                     {/if}
                     {if $actions.edit}
-                    <a title="Редактировать" onclick="{$actions.edit}({$item.id})">
+                    <a title="Редактировать" onclick="{$actions.edit}({$item.id})" class="linkBox">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a> 
                     {/if}
                     {if $actions.delete}
-                    <a title="Удалить" onclick="{$actions.delete}({$item.id})">
+                    <a title="Удалить" onclick="{$actions.delete}({$item.id})" class="linkBox">
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
                     {/if}
