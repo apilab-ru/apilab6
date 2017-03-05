@@ -4,6 +4,6 @@
     </div>
     <div class="f-right">
         <h3> Разделы </h3>
-        {widget name=struct func='admin.struct("article","listContent")'}
+        {widget name=struct func='admin.struct("article","listContent")' struct=$struct all=1}
     </div>
 </div>

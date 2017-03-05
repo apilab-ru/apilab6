@@ -3,7 +3,7 @@
 namespace core\widget\struct;
 
 
-class widget extends \core\widget\WidgetBase
+class Widget extends \core\widget\WidgetBase
 {
     
     function run($params=null)
@@ -18,17 +18,30 @@ class widget extends \core\widget\WidgetBase
         }
         
         if(isset($params['struct'])){
-            foreach($list as $key=>$item){
-                if($item['id']==$params['struct']){
-                   $list[$key]['check'] = 1; 
-                }
-            }
+            $list = $this->findStruct($list,$params['struct']);
         }
         
         echo $this->render("run",[
             'list'=>$list,
             'func'=>$params['func']
         ]);
+    }
+    
+    function findStruct($list,$struct,&$check=0)
+    {
+        foreach($list as $key=>$item){
+            if($item['id']==$struct){
+                $list[$key]['check'] = 1;
+                $check = 1;
+            }elseif($item['childNodes']){
+                $check = 0;
+                $list[$key]['childNodes'] = $this->findStruct($item['childNodes'],$struct,$check);
+                if($check){
+                    $list[$key]['check'] = 1;
+                }
+            }
+        }
+        return $list;
     }
     
 }
