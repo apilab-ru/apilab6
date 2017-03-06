@@ -71,6 +71,9 @@ function base(){
 }
 base = new base();
 
+popUp = function(message, type){
+    
+}
 
 var PageScripts = new (function () {
     function fn() {

@@ -10,6 +10,8 @@ class Model extends \core\models\ModelBase
         parent::__construct();
         $param['page'] = 1;
         $this->filter = $param;
+        
+        $this->imageDir = $_SERVER['DOCUMENT_ROOT'].'/content/images_orig/';
     }
     
     function getImage($id)
@@ -55,7 +57,7 @@ class Model extends \core\models\ModelBase
             $sql .= " where " . implode(" && ",$where);
         }
          
-        $sql.=$limit;
+        $sql.= " order by id DESC " . $limit;
         
         $list = $this->db->select($sql);
         
@@ -67,6 +69,35 @@ class Model extends \core\models\ModelBase
             'limit'=>$filter['limit'],
             'page'=>$filter['page']
         ];
+    }
+    
+    function getImgType($file)
+    {
+        $list = explode("/",$file['type']);
+        $type = mb_strtolower($list[count($list)-1]);
+        return $type;
+    }
+    
+    function saveImage($file,$id)
+    {
+        $destination = $this->imageDir . $id.".".$file['type'];
+        return copy($file['tmp_name'], $destination);
+    }
+    
+    function addImage($name,$type,$structId=0,$descripton='')
+    {
+        return $this->db->insert('images',[
+            'name'=>$name,
+            'type'=>$type,
+            'struct_id'=>$structId,
+            'descr'=>$descripton,
+            'author'=>$_SESSION['user']['id']
+        ]);
+    }
+    
+    function removeFile($id)
+    {
+        $this->db->query('delete from images where id=?d',$id);
     }
     
 }

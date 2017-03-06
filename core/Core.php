@@ -94,7 +94,7 @@ class Core{
         $action = "ajax".mb_convert_case($url[2], MB_CASE_TITLE, "UTF-8");
         
         if(method_exists($this->module->$module, $action)){
-            $res = $this->module->$module->$action($_REQUEST['send']);
+            $res = $this->module->$module->$action($_REQUEST['send'],$_REQUEST);
         }else{
             $res = ['error'=>"method $action not exist"];
         }

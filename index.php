@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 $config = include "config/config.php";
 
 define("APP_DIR", dirname(__FILE__));

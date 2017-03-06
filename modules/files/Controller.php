@@ -9,24 +9,29 @@ class Controller extends \core\controllers\ControllerBase
         $this->model = new Model($param);
     }
     
-    function ajaxUploadImage($send)
+    function ajaxUploadImage($send,$request)
     {
         $files = $this->model->getFiles($_FILES['file']);
-        //pr('files',$files);
-        /*
-            [1] => Array
-        (
-            [name] => mvc.png
-            [type] => image/png
-            [tmp_name] => D:\OpenServer\userdata\temp\php673.tmp
-            [error] => 0
-            [size] => 24331
-        )
-        */
-        //foreach($_FILES)
+        $errors = array();
         foreach($files as $file){
-            //array('id' => '48','type' => 'jpg','name' => 'main2.jpg','descr' => NULL,'struct_id' => '2','date_add' => '2016-10-12 15:24:20','author' => '0'),
-            //$file['']
+            $file['type'] = $this->model->getImgType($file);
+            $id = $this->model->addImage($file['name'],$file['type'],$request['struct']);
+            if($id){
+                $move = $this->model->saveImage($file,$id);
+            }else{
+                $errors[] = 'Ошибка записи файла';
+            }
+            if(!$move){
+                if($id){
+                    $this->model->removeFile($id);
+                }
+                $errors[] = 'Ошибка добавления файла';
+            }
+        }
+        if(!$errors){
+            return ['stat'=>1];
+        }else{
+            return ['stat'=>0,'errors'=>$errors];
         }
     }
     

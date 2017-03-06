@@ -68,21 +68,25 @@ function files(){
             stateChange : function(event,n1,n2){
                 if (event.target.readyState == 4) {
                     if (event.target.status == 200) {
-                        alert('Загрузка успешно завершена!');
+                        popUp('Успешно');
                         imageArea.box.find('.status').text('');
                         
                         var data = files.parseSend(this.response);
-                        
-                        if(imageArea.callback){
-                           imageArea.callback(data.re,data.mas)
+                        if(data.mas.stat){
+                            if(imageArea.callback){
+                               imageArea.callback(data.re,data.mas)
+                            }
+                        }else{
+                            console.log('data',data);
+                            popUp('Ошибка ','error');
                         }
                     } else {
-                        alert('Произошла ошибка!');
+                        popUp('Ошибка подключения');
                     }
                 }
             },
             uploadFiles : function(){
-                this.box.removeClass('drop');
+                this.box.removeClass('drag');
                 
                 var xhr = new XMLHttpRequest();
                 xhr.upload.addEventListener('progress', this.uploadProgress, false);
@@ -102,7 +106,6 @@ function files(){
         };
         
         imageArea.callback = function(re,mas){
-            console.log('onload',re,mas);
             admin.page('files','images')(1);
         }
         
