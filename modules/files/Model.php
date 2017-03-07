@@ -12,6 +12,7 @@ class Model extends \core\models\ModelBase
         $this->filter = $param;
         
         $this->imageDir = $_SERVER['DOCUMENT_ROOT'].'/content/images_orig/';
+        $this->imageCache = $_SERVER['DOCUMENT_ROOT'].'/content/images/';
     }
     
     function getImage($id)
@@ -95,9 +96,19 @@ class Model extends \core\models\ModelBase
         ]);
     }
     
-    function removeFile($id)
+    function removeImage($id)
     {
         $this->db->query('delete from images where id=?d',$id);
+        
+        $list = glob($this->imageDir.$id.".*");
+        foreach($list as $item){
+            unlink($item);
+        }
+        
+        $list = glob($this->imageCache.$id."_*");
+        foreach($list as $item){
+            unlink($item);
+        }
     }
     
 }

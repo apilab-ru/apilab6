@@ -7,6 +7,17 @@
     padding: 3px;
     margin: 3px;
     cursor: pointer;
+    position: relative;
+}
+.listFiles .item .remove {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    text-shadow: 0px 0px 2px #fff;
+}
+.listFiles .item .remove:hover{
+    color: #337ab7;
+    text-shadow: 0px 0px 1px #000;
 }
 .listFiles[mode='list'] .item .info{
     display: block;

@@ -23,7 +23,7 @@ class Controller extends \core\controllers\ControllerBase
             }
             if(!$move){
                 if($id){
-                    $this->model->removeFile($id);
+                    $this->model->removeImage($id);
                 }
                 $errors[] = 'Ошибка добавления файла';
             }
@@ -33,6 +33,12 @@ class Controller extends \core\controllers\ControllerBase
         }else{
             return ['stat'=>0,'errors'=>$errors];
         }
+    }
+    
+    function ajaxRemoveImage($id)
+    {
+        dlog('remove image',$id);
+        $this->model->removeImage($id);
     }
     
     function getAdminActions()

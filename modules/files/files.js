@@ -112,6 +112,15 @@ function files(){
         return imageArea;
     }
     
+    this.removeImage = function(id,myb,e){
+        e.stopPropagation();
+        e.preventDefault();
+        $(myb).parents('.item:first').remove();
+        self.post('removeImage',id,function(re){
+            console.log('remove image',re);
+        })
+    }
+    
 }
 files.prototype = base;
 files = new files();

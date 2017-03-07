@@ -26,6 +26,7 @@
                         </div>
                     </div>
                 </div>
+                <span class="remove glyphicon glyphicon-trash" onclick="files.removeImage({$item.id},this,event)"></span>
             </div>
         {/foreach} 
         {else}

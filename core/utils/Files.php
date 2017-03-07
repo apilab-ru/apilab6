@@ -36,10 +36,6 @@ class Files
         $sizeOrig = $this->getSize($path);
         $sizeTpl = $this->getTplSize($param['tpl'],$sizeOrig);
         
-        //pr($sizeOrig);
-        
-        //pr($sizeTpl);
-        
         $cache = $this->imgResize($file,$param['type'],$param['tpl'],$sizeTpl,$sizeOrig);
         $this->saveImage($link,$param['type'],$cache);
         $this->echoImg($cache,mime_content_type($path),$type);
@@ -80,6 +76,7 @@ class Files
     
     function loadImage($path,$type) 
     {
+        //dlog('load',[$path,$type]);
         switch ($type) {
             case 'gif': 
                 return imagecreatefromgif($path);
@@ -157,7 +154,6 @@ class Files
     
     function getTplSize($tpl,$sizeOrig) 
     {
-        
         $sizeTpl = new \stdClass();
         
         $sizeTpl->width = $tpl['width'];
@@ -183,7 +179,6 @@ class Files
     
     function imgResize($file,$typeFile,$tpl,$sizeTpl,$sizeOrig) 
     {
-        
         switch ($tpl['change']) {
             case 1:
                 //Область из центра
