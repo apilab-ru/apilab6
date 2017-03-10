@@ -42,7 +42,8 @@ class Core{
             
             $act = $this->actions[$url[0]];
             if(is_array($act)){
-                $class = new $act[0]($this->config['modules'][$act[2]]);
+                $set = (isset($act[2]) && isset($this->config['modules'][$act[2]])) ? $this->config['modules'][$act[2]] : null;
+                $class = new $act[0]($set);
                 $class->{$act[1]}($url);
             }else{
                 $this->$act($url);

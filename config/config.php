@@ -33,7 +33,8 @@ return [
         'files'=>[
             "limit"=>20,
             "struct"=>0
-        ]
+        ],
+        "log"=>[]
     ],
     "version"=>"6.0.1"
 ];

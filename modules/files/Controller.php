@@ -37,7 +37,6 @@ class Controller extends \core\controllers\ControllerBase
     
     function ajaxRemoveImage($id)
     {
-        dlog('remove image',$id);
         $this->model->removeImage($id);
     }
     

@@ -121,6 +121,12 @@ function files(){
         })
     }
     
+    this.openFilesBrowser = function(){
+        
+    }
+    
 }
 files.prototype = base;
 files = new files();
+
+window.imageArea = files.initImageArea();

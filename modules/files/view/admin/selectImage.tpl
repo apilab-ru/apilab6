@@ -10,8 +10,8 @@
         <div class="status"></div>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", function(event) { 
+        /*document.addEventListener("DOMContentLoaded", function(event) { 
             window.imageArea = files.initImageArea();
-        });
+        });*/
     </script>
 {/strip}

@@ -24,6 +24,7 @@ class Files
     
     function ActionGetImages($link)
     {
+        ob_start();
         $param = $this->parseParams($link);
         $path = $this->getImgPath($param['id'],$param['type']);
         
@@ -33,11 +34,15 @@ class Files
         }
         
         $file = $this->loadImage($path,$param['type']);
+        
         $sizeOrig = $this->getSize($path);
         $sizeTpl = $this->getTplSize($param['tpl'],$sizeOrig);
         
         $cache = $this->imgResize($file,$param['type'],$param['tpl'],$sizeTpl,$sizeOrig);
+        
         $this->saveImage($link,$param['type'],$cache);
+        //dlog('img',  ob_get_clean());
+        ob_get_clean();
         $this->echoImg($cache,mime_content_type($path),$type);
         
     }
@@ -235,6 +240,13 @@ class Files
                     
                 }
                 
+                if($sizeTpl->width == 0){
+                    $sizeTpl->width = ($sizeOrig->width/$sizeOrig->height) * $sizeTpl->height;
+                }
+                if($sizeTpl->height == 0){
+                    $sizeTpl->height = ($sizeOrig->height / $sizeOrig->width) * $sizeTpl->width;
+                }
+                
                 $cache = imagecreatetruecolor($sizeTpl->width, $sizeTpl->height);
                 
                 if ($typeFile == 'png') {
@@ -255,11 +267,42 @@ class Files
                     imagefill($cache, 0, 0, $transColour);
                 }
                 
+                
+                //pr($sizeTpl);
+                
+                //pr($sizeOrig);
+                
+                /*$sample = new \stdClass();
+                $sample->width = 0;
+                $sample->height = 0;
+                
+                $sizeTpl->delta = $sizeTpl->width / $sizeTpl->height;
+                
+                if($sizeOrig->delta == 1){
+                    //w == h
+                    if($sizeTpl->delta < 1){
+                        $sample->width = $sizeTpl->width;
+                        $sample->height = ($sizeOrig->height / $sizeOrig->width) * $sizeTpl->width;
+                    }else{
+                        $sample->height = $sizeTpl->height;
+                        $sample->width = ($sizeOrig->width / $sizeOrig->height) * $sizeTpl->height;
+                    }
+                }elseif($sizeOrig->delta < 1){
+                    //w > h
+                    
+                }else{
+                    //w < h
+                    
+                }*/
+                
+                
                 $h_ot_d = $sizeTpl->height / $sizeOrig->height; // Определяем отношение нужной высоты к исходной
                 $w_ot_d = $sizeTpl->width / $sizeOrig->width; // И ширины
                 
+                //pr($h_ot_d,$w_ot_d );
+                
                 if ($h_ot_d > $w_ot_d) { // Если отношение по высоте больше чем по ширине, то отталкиваемся от ширины
-                    if ($tpl['cx']) {
+                    /*if ($tpl['cx']) {
                         $fc = round($sizeOrig->width / $tpl['cx']);
                         $fxc = round($sizeOrig->width / $fc - ($sizeTpl->width / $h_ot_d) / $fc);
                         if ($fxc < 0) {
@@ -268,13 +311,14 @@ class Files
                         if ($fxc + $sizeTpl->widt > $sizeOrig->width) {
                             $fxc = $sizeOrig->width - $sizeTpl->width;
                         }
-                    } else {
+                    } else {*/
                         $fxc = round(($sizeOrig->width - $sizeTpl->width/ $h_ot_d) / 2);
-                    }
+                    //}
                     imagecopyresampled($cache, $file, 0, 0, $fxc, 0, $sizeTpl->width, $sizeTpl->height, round($sizeTpl->width / $h_ot_d), $sizeOrig->height);
                 } elseif ($h_ot_d < $w_ot_d) {
                     $fyc = round(($sizeOrig->height - $sizeTpl->height / $w_ot_d) / 2);
-                    imagecopyresampled($cache, $file, 0, 0, 0, $fyc, $sizeTpl->width, $sizeTpl->height, $this->width, round($sizeOrig->height / $w_ot_d));
+                    //pr($cache, $file, 0, 0, 0, $fyc, $sizeTpl->width, $sizeTpl->height, $sizeOrig->width, round($sizeOrig->height * $w_ot_d));
+                    imagecopyresampled($cache, $file, 0, 0, 0, $fyc, $sizeTpl->width, $sizeTpl->height, $sizeOrig->width, round($sizeTpl->height / $w_ot_d));
                 } else{
                     imagecopyresampled($cache, $file, 0, 0, 0, 0, $sizeTpl->width, $sizeTpl->height, $sizeOrig->width, $sizeOrig->height);
                 }
