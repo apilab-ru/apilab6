@@ -38,6 +38,10 @@
     display: flex;
     padding: 3px;
 }
+.listFiles .item img {
+    width: 150px;
+    height: 150px;
+}
 .listFiles .item .line .name{
     width: 100px;
     font-weight: bold;
@@ -55,12 +59,29 @@
     padding: 10px;
     background: #fff;
     border-radius: 5px;
+    height: 325px;
+}
+.selectTplBox {
+    width: 100%;
+    padding-bottom: 7px;
+}
+.selectImgBox .panel{
+    margin-top:5px;
+    display:flex;
+    justify-content: space-around;
+    padding:5px;
+    flex-wrap: wrap;
+}
+.selectImgBox img {
+    max-height: 250px;
+    max-width: 300px;
 }
 .selectImgBox .image{
-    width: 250px;
+    min-width: 250px;
     margin: 0 auto;
     position: relative;
     z-index: 3;
+    text-align: center;
 }
 
 .selectImgBox .uploadImageArea{

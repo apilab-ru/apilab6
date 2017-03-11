@@ -83,7 +83,7 @@ function admin(){
            self.post('module',{
                module:module,
                action:action,
-               param:param
+               param:param,
            },callback)
        }
    }

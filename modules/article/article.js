@@ -13,6 +13,10 @@ function article(){
     this.saveArticle = function(myb,event){
         event.preventDefault();
     }
+    
+    this.selectImage = function(myb){
+        
+    }
 }
 article.prototype = base;
 article = new article();

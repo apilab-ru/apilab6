@@ -41,7 +41,6 @@ class Files
         $cache = $this->imgResize($file,$param['type'],$param['tpl'],$sizeTpl,$sizeOrig);
         
         $this->saveImage($link,$param['type'],$cache);
-        //dlog('img',  ob_get_clean());
         ob_get_clean();
         $this->echoImg($cache,mime_content_type($path),$type);
         
@@ -267,39 +266,8 @@ class Files
                     imagefill($cache, 0, 0, $transColour);
                 }
                 
-                
-                //pr($sizeTpl);
-                
-                //pr($sizeOrig);
-                
-                /*$sample = new \stdClass();
-                $sample->width = 0;
-                $sample->height = 0;
-                
-                $sizeTpl->delta = $sizeTpl->width / $sizeTpl->height;
-                
-                if($sizeOrig->delta == 1){
-                    //w == h
-                    if($sizeTpl->delta < 1){
-                        $sample->width = $sizeTpl->width;
-                        $sample->height = ($sizeOrig->height / $sizeOrig->width) * $sizeTpl->width;
-                    }else{
-                        $sample->height = $sizeTpl->height;
-                        $sample->width = ($sizeOrig->width / $sizeOrig->height) * $sizeTpl->height;
-                    }
-                }elseif($sizeOrig->delta < 1){
-                    //w > h
-                    
-                }else{
-                    //w < h
-                    
-                }*/
-                
-                
                 $h_ot_d = $sizeTpl->height / $sizeOrig->height; // Определяем отношение нужной высоты к исходной
                 $w_ot_d = $sizeTpl->width / $sizeOrig->width; // И ширины
-                
-                //pr($h_ot_d,$w_ot_d );
                 
                 if ($h_ot_d > $w_ot_d) { // Если отношение по высоте больше чем по ширине, то отталкиваемся от ширины
                     /*if ($tpl['cx']) {

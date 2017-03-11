@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="imgBox">
+            <div class="imgBox" onclick="article.selectImage(this)">
                 <img class="img-thumbnail" src="{img id=0 type=jpg tpl=0x0}"/>
             </div>
         </div>
@@ -82,7 +82,11 @@
     </div>
 </form>
 <script>
-    document.addEventListener("DOMContentLoaded", function(event) { 
+    if('article' in window){
         article.initEditPage();
-    });
+    }else{
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            article.initEditPage();
+        });
+    }
 </script>

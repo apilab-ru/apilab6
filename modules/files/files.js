@@ -11,8 +11,11 @@ function files(){
                   .siblings('.active').removeClass('active');
         }
         
+        var pageData = self.getDataPage();
+        
         self.call("selectImage",{
-            image:id
+            image:id,
+            act:pageData.act
         },function(re,mas){
             $('.selectImgBox').html(re);
             self.initImageArea();
@@ -119,6 +122,43 @@ function files(){
         self.post('removeImage',id,function(re){
             console.log('remove image',re);
         })
+    }
+    
+    this.changeSelectTpl = function(myb){
+        var tpl = $(myb).val();
+        var $box = $('.selectImgBox .image');
+        var id = $box.attr('myid');
+        var type = $box.attr('mytype');
+        $box.find('img').attr({src:self.getImageSrc(id,type,tpl)});
+    }
+    
+    this.previewImage = function(myb){
+        var src = $(myb).attr('src');
+        window.open(src);
+    }
+    
+    this.getImageSrc = function(id,type,tpl){
+        return '/content/images/'+id+"_"+tpl+"."+type;
+    }
+    
+    this.initSelectImage = function(act,param){
+        return function(id,type){
+            var image = {};
+            image.id = id;
+            image.type = type;
+            image.tpl = $('#tplSelectImage').val();
+            image.src = self.getImageSrc(id,type,image.tpl);
+            
+            switch(act){
+                case 'linkUrl':
+                case 'browseUrl':
+                    window.opener.CKEDITOR.tools.callFunction( param.CKEditorFuncNum, image.src);
+                    break
+            }
+            
+            window.close();
+        
+        }
     }
     
     this.openFilesBrowser = function(){

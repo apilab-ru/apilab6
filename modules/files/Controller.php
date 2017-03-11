@@ -42,7 +42,6 @@ class Controller extends \core\controllers\ControllerBase
     
     function getAdminActions()
     {
-        
         return [
             "name"=>"Файлы",
             "icon"=>"admin-icon-files",
@@ -65,7 +64,36 @@ class Controller extends \core\controllers\ControllerBase
                 )
             )
         ];
-        
+    }
+    
+    function ActionImageUpload($param)
+    {
+        if($_SESSION['user']){
+            $file = $_FILES['upload'];
+            $file['type'] = $this->model->getImgType($file);
+            $id = $this->model->addImage($file['name'],$file['type'],0);
+            $move = $this->model->saveImage($file,$id);
+            dlog('image params',array(
+                $file,$id,$move
+            ));
+            $funcNum = $_GET['CKEditorFuncNum'];
+            $url = $this->model->getImageSrc($id,$file['type'],'original');
+            $message = 'Файл успешно загружен';
+            echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
+        }
+    }
+    
+    function ActionImageBrowser($param)
+    {
+        ob_start();
+        //pr($_REQUEST['act'],$_REQUEST['CKEditor'],$_REQUEST['CKEditorFuncNum']);
+        $this->imageBrowser();
+        $html = ob_get_clean();
+        echo $this->render('admin/actionImageBrowser',array(
+            'html'=>$html,
+            'act'=>$_REQUEST['act'],
+            'param'=>$_REQUEST
+        ));
     }
     
     function adminImages($param)
@@ -73,7 +101,7 @@ class Controller extends \core\controllers\ControllerBase
         $this->imageBrowser($param);
     }
     
-    function imageBrowser($param)
+    function imageBrowser($param=null)
     {
         ob_start();
         $this->adminAjaxImages($param);
@@ -96,9 +124,10 @@ class Controller extends \core\controllers\ControllerBase
     function adminAjaxSelectImage($param)
     {
         $image = $this->model->getImage($param['image']);
-        
         echo $this->render("admin/selectImage",[
-            'image'=>$image
+            'image'=>$image,
+            'act'=>$param['act'],
+            'tpls'=>$this->model->getListTpls()
         ]);
     }
     

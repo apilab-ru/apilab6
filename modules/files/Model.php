@@ -111,4 +111,13 @@ class Model extends \core\models\ModelBase
         }
     }
     
+    function getListTpls()
+    {
+        return $this->db->select("select alias,title from img_templates");
+    }
+    
+    function getImageSrc($id,$type,$tpl)
+    {
+        return '/content/images/'.$id."_".$tpl.".".$type;
+    }
 }
