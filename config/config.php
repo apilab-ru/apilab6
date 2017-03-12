@@ -34,7 +34,8 @@ return [
             "limit"=>20,
             "struct"=>0
         ],
-        "log"=>[]
+        "log"=>[],
+        "tags"=>[]
     ],
     "version"=>"6.0.1"
 ];
