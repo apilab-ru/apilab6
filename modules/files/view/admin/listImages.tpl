@@ -30,7 +30,7 @@
             </div>
         {/foreach} 
         {else}
-            <div class="alert alert-info">
+            <div class="alert alert-info statMessage">
                 Нет файлов
             </div>
         {/if}

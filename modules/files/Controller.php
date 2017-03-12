@@ -86,7 +86,6 @@ class Controller extends \core\controllers\ControllerBase
     function ActionImageBrowser($param)
     {
         ob_start();
-        //pr($_REQUEST['act'],$_REQUEST['CKEditor'],$_REQUEST['CKEditorFuncNum']);
         $this->imageBrowser();
         $html = ob_get_clean();
         echo $this->render('admin/actionImageBrowser',array(
@@ -110,6 +109,10 @@ class Controller extends \core\controllers\ControllerBase
         ob_start();
         $this->adminAjaxSelectImage($param);
         $param['selectImage'] = ob_get_clean();
+        
+        if(!$param['struct']){
+            $param['struct'] = 0;
+        }
         
         echo $this->render('admin/imageBrowser',$param);
     }

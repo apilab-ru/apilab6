@@ -18,4 +18,9 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+    files.initImageBrowser();
+});
+</script>
 {/strip}

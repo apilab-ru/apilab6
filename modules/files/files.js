@@ -154,15 +154,21 @@ function files(){
                 case 'browseUrl':
                     window.opener.CKEDITOR.tools.callFunction( param.CKEditorFuncNum, image.src);
                     break
+                case 'selectImage':
+                    window.parent[param.module][param.func](image);
+                    break;
             }
-            
             window.close();
-        
         }
     }
     
-    this.openFilesBrowser = function(){
-        
+    
+    
+    this.initImageBrowser = function(){
+        $(document).on('click','.structNav li',function(){
+            $(this).addClass('active');
+            $(this).siblings('.active').removeClass('active');
+        })
     }
     
 }
