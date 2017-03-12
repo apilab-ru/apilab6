@@ -1,0 +1,1 @@
+PageStyles.load('/core/libs/datepicker/datepicker3.css');
