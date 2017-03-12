@@ -93,12 +93,153 @@ function base(){
     this.getLink = function(){
         return location.pathname + location.search;
     }
+    
+    this.createPop = function(title,html,width){
+        var $div = $("<div/>",{
+            class: 'popWin'
+        });
+
+        var $close = $('<div/>',{
+            class: 'close',
+            title: 'Закрыть',
+            html : "Х"
+        })
+
+        if(title){
+            var $title = $("<div/>",{
+                class : 'popTitle',
+                html: title
+            })
+            $div.append($title);
+            $div.title = function(re){
+                $title.html( re );
+            }
+        }
+
+        if($.type(html)=='object' && html.iframe){
+            html = "<iframe src="+html.iframe+" class='popIframe'></iframe>"
+        }
+
+        var $content = $('<div/>',{
+            class : 'popContent',
+            html  : html
+        })
+        $div.append($content);
+        $div.append($close);
+
+        var calbacks = [];
+
+        $div.close = function(){
+            $div.remove();
+            $.each(calbacks,function(n,i){
+                i( $div );
+            })
+        }
+        $div.data('close',function(){
+            $div.close();
+        })
+        $close.on('click', function(){
+            $div.close()
+        });
+
+        $div.update = function(re){
+            $content.html( re );
+        }
+        
+        $div.addCallback = function(call){
+            calbacks.push(call);
+        }
+
+        var $box = $('.popBox');
+        if($box.length == 0){
+            $box = $('<div/>',{
+            class: 'popBox'
+            });
+            $('body').append($box);
+        }
+        $box.append($div);
+
+        if(width){
+           $div.css({width:width}); 
+        }
+
+        $div.toCenter = function(width){
+            var width = (width) ? width : $div.outerWidth();
+            var left = (screen.width - width ) / 2;
+            $div.css({left:left});
+        }
+        
+        $div.setBack = function(){
+            var $back = $('<div/>',{
+                class:'staticBack'
+            });
+            $box.append($back);
+            $('body').css({overflow:'hidden'});
+            $div.addCallback(function(){
+               $back.remove();
+               $('body').css({overflow:'auto'});
+            });
+        }
+        
+        $div.toCenter();
+
+        return $div;
+    }
 }
 base = new base();
 
 popUp = function(message, type){
     
 }
+
+PageStyles = new (function () {
+    function fn() {
+        var self = this;
+        this.load = function (h, success, force) {
+            if (typeof (h) == 'string') {
+                var isLoad = false;
+                for (var i = 0; i < document.styleSheets.length; i++) {
+                    if (document.styleSheets[i].href !== null) {
+                        if (new URL(document.styleSheets[i].href).pathname == h) {
+                            isLoad = i;
+                            break;
+                        }
+                    }
+                }
+                if (isLoad === false || force === true) {
+                    if (isLoad !== false) {
+                        $(document.styleSheets[isLoad].ownerNode).remove();
+                    }
+                    var el = $('<link rel="stylesheet" type="text/css" href="' + h + ((force) ? '?sum=' + ("0123456789".gen(3)) : "") + '" />');
+                    el.on('load', function () {
+                        if (typeof (success) == 'function') {
+                            success();
+                        }
+                    });
+                    $('head').append(el);
+                } else {
+                    if (typeof (success) == 'function') {
+                        success();
+                    }
+                }
+            } else if (typeof (h) == 'object' && h.constructor.name == 'Array') {
+                var l = 0;
+                var onload = function () {
+                    l++;
+                    if (l == h.length) {
+                        if (typeof (success) == 'function') {
+                            success();
+                        }
+                    }
+                }
+                for (var i = 0; i < h.length; i++) {
+                    self.load(h[i], onload, force);
+                }
+            }
+        }
+    }
+    return new fn();
+});
 
 var PageScripts = new (function () {
     function fn() {
@@ -187,6 +328,10 @@ function regRes(){
         }
         
         func();
+    }
+    
+    this.getAviable = function(){
+        return aviable;
     }
 }
 regRes = new regRes();

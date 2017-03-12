@@ -9,3 +9,74 @@
 .customPaginator .pagination a{
     cursor: pointer;
 }
+/* pop */
+.popBox{
+    position: static;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 0px;
+}
+.popBox .popWin{
+    position: absolute;
+    top: 50px;
+    width: 600px;
+    box-sizing: border-box;
+    border: 1px solid #d6d4d4;
+    border-radius: 1px;
+    z-index: 999;
+}
+.popWin .popContent{
+    padding: 10px;
+    background: #fff;
+}
+.popWin .popTitle{
+    text-align: center;
+    padding: 0px 0px 4px;
+    background: #f9f9f9;
+    font-weight: bold;
+    color: #565252;
+    font-size: 17px;
+    padding: 4px 0px 5px;
+}
+.popWin .submitLine{
+    text-align: right;
+    padding: 5px 5px 0 0;
+    position:relative;
+}
+.popWin .close{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 24px;
+    text-align: center;
+    color: #b37979;
+    height: 22px;
+    line-height: 22px;
+    cursor: pointer;
+    background: #e4e2e2;
+    font-size: 14px;
+    opacity: 0.7;
+}
+.popWin .close:hover{
+    opacity: 1;
+}
+
+.popIframe{
+    width: 100%;
+    height: calc(100vh - 115px);
+    border: none;
+}
+.staticBack{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 998;
+    width: 100%;
+    height: 100%;
+    background: rgba(68, 68, 68, 0.74);
+}
+.statMessage{
+    margin: 30px auto;
+    color: #000!important;
+}
