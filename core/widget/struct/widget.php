@@ -21,10 +21,18 @@ class Widget extends \core\widget\WidgetBase
             $list = $this->findStruct($list,$params['struct']);
         }
         
-        echo $this->render("run",[
-            'list'=>$list,
-            'func'=>$params['func']
-        ]);
+        if($params['tpl']=='select'){
+            echo $this->render('select',[
+                'list'=>$list,
+                'struct'=>$params['struct'],
+                'before'=>''
+            ]);
+        }else{
+            echo $this->render("run",[
+                'list'=>$list,
+                'func'=>$params['func']
+            ]);
+        }
     }
     
     function findStruct($list,$struct,&$check=0)
