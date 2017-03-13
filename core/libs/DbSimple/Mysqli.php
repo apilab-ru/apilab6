@@ -192,4 +192,13 @@ class DbSimple_Mysqli extends DbSimple_Generic_Database
 	{
 		return $this->link->affected_rows;
 	}
+        
+        function getErrors()
+        {
+            return [
+                'errno'=>$this->link->errno,
+                'error'=>$this->link->error,
+                'query'=>$query
+            ];
+        }
 }

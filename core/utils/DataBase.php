@@ -65,4 +65,9 @@ class DataBase
     {
         return $this->db->query('insert into ?# (?#) values (?a)',$table,array_keys($row),array_values($row));
     }
+    
+    function getError()
+    {
+        return $this->db->getErrors();
+    }
 }
