@@ -5,12 +5,14 @@ namespace modules\article;
 class Model extends \core\models\ModelBase
 {
     
-    function __construct($param=array()) {
+    function __construct($param=array()) 
+    {
         parent::__construct();
         $this->filter = $param;
     }
     
-    function getListArticle($filter){
+    function getListArticle($filter)
+    {
         
         $filter = $this->extendFilter($filter,$this->filter);
         
@@ -49,7 +51,7 @@ class Model extends \core\models\ModelBase
             $sql .= " where ".implode(" && ",$where);
         }
         
-        $sql .= " limit $limit";
+        $sql .= " order by id DESC limit $limit";
         
         $list = $this->db->select($sql);
         
@@ -62,9 +64,33 @@ class Model extends \core\models\ModelBase
         
     }
     
-    function getArticle($id){
+    function getArticle($id)
+    {
         $art = $this->db->selectRow("select * from article where id=?d",$id);
-        
+        $art['image'] = $this->db->selectRow("select * from images where id=?d",$art['img_id']);
+        $art['tags'] = \core\Core::$app->module->tags->getTagsObject('article',$id);
         return $art;
+    }
+    
+    function saveArticle($art,&$id,&$error)
+    {
+        if($art['date_start']){
+           $art['date_start'] = date('Y-m-d H:i:s',strtotime(art['date_start'])); 
+        }
+        if($id){
+            $stat = $this->db->query('UPDATE article set ?a where id=?d',$art,$id);
+        }else{
+            $id = $this->db->insert('article',$art);
+            if($id){
+                $stat = 1;
+            }
+        }
+        if(!$stat){
+            $error = $this->db->getError();
+            if(!$error && $id){
+                $stat = 1;
+            }
+        }
+        return $stat;
     }
 }

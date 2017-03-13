@@ -6,7 +6,8 @@ return [
     ],
     "source"=>[
         "admin"=>[
-            "js"=>['/modules/article/article.js']
+            "js"=>['/modules/article/article.js'],
+            "css"=>['/modules/article/style.css']
         ]
     ]
 ];

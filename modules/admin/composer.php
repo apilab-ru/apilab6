@@ -21,6 +21,14 @@ return [
                 "ckeditor"=>[
                     "/core/libs/ckeditor/setup.js",
                     "/core/libs/ckeditor/ckeditor.js"
+                ],
+                "datepicker"=>[
+                    "/core/libs/datepicker/bootstrap-datepicker.js",
+                    "/core/libs/datepicker/init.js"
+                ],
+                "datetimepicker"=>[
+                    "/core/libs/datetimepicker/jquery.datetimepicker.full.min.js?1",
+                    "/core/libs/datetimepicker/init.js?1"
                 ]
            ]
         ]

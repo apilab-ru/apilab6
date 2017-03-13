@@ -3,6 +3,8 @@ function article(){
     var self = this;
     this.from = "/";
     
+    this.call = admin.call("article");
+    
     this.initEditPage = function(){
         regRes.load('ckeditor',function(){ 
             CKEDITOR.replace('artEditPre',ckmin);
@@ -27,7 +29,7 @@ function article(){
     this.saveArticle = function(myb,event){
         event.preventDefault();
         var data = {};
-        $(myb).find('input').each(function(n,i){
+        $(myb).find('input,select').each(function(n,i){
             var $inp = $(i);
             data[$inp.attr('name')] = $inp.val();
         })
@@ -36,7 +38,18 @@ function article(){
             var id = $inp.attr('id');
             data[$inp.attr('name')] = CKEDITOR.instances[id].getData();
         })
-        console.log('saveArt',data)
+        self.post('saveArticle',{
+            article:data,
+            id:self.getFilter().id
+        },function(re,mas){
+            console.log('saveArticle',re,mas);
+            if(mas.stat){
+                popUp('Успешно');
+                $('a[href="/admin/article/list"]:first').click();
+            }else{
+                popUp('Ошибка');
+            }
+        })
     }
     
     this.selectImage = function(myb){

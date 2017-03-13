@@ -8,9 +8,7 @@ class Controller extends \core\controllers\ControllerBase
         $this->model = new Model($param);
     }
     
-    
     function getAdminActions(){
-        
         return [
             "act"=>"list",
             "name"=>"Статьи",
@@ -20,7 +18,17 @@ class Controller extends \core\controllers\ControllerBase
         
     }
     
-    function adminList($param = null){
+    function ajaxSaveArticle($param)
+    {
+        if($_SESSION['user']){
+            $this->model->db->setLogger();
+            $stat = $this->model->saveArticle($param['article'],$param['id'],$error);
+            return ['stat'=>$stat,'error'=>$error];
+        }
+    }
+    
+    function adminList($param = null)
+    {
         $data = $this->model->getListArticle($param);
         if($param){
             foreach($param as $key=>$item){
@@ -35,7 +43,8 @@ class Controller extends \core\controllers\ControllerBase
         echo $this->render('admin/list',$data);
     }
     
-    function adminAjaxListContent($param=null){
+    function adminAjaxListContent($param=null)
+    {
         $data = $this->model->getListArticle($param);
         if($param){
             foreach($param as $key=>$item){
@@ -47,8 +56,8 @@ class Controller extends \core\controllers\ControllerBase
         echo $this->render('admin/listContent',$data);
     }
     
-    function adminEditArticle($param){
-        
+    function adminEditArticle($param)
+    {
         $article = $this->model->getArticle($param['id']);
         
         echo $this->render("admin/editArticle",[

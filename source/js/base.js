@@ -189,7 +189,7 @@ function base(){
 base = new base();
 
 popUp = function(message, type){
-    
+    alert(message);
 }
 
 PageStyles = new (function () {
