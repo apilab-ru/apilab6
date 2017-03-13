@@ -1,6 +1,10 @@
 <?php
-function smarty_modifier_date($string, $format = null, $default_date = '', $formatter = 'auto')
+function smarty_modifier_date($string, $format = null) 
 {
-    $time = strtotime($string);
-	return date($format,$time);
+    if(is_numeric($string)){
+        $time = $string;
+    }else{
+        $time = strtotime($string);
+    }
+    return date($format, $time);
 }
