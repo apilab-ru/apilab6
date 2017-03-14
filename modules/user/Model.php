@@ -10,11 +10,14 @@ class Model extends \core\models\ModelBase
         return $this->db->selectRow("select * from user where mail=? && pass=?",$login,md5($pass));
     }
     
-    function auth($user,$remember=0)
+    function getUserCookie($cookie)
     {
-        session_start();
+        return $this->db->selectRow("select * from user where cookie=?",$cookie);
+    }
+    
+    function auth($user,$remember=0,$cookie)
+    {
         if($remember){
-            $cookie = md5( $user['email'] . $user['id'] . time() . "apilab" );
             $this->updateUser($user['id'],['cookie'=>$cookie]);
         }
         $_SESSION['user'] = $user;

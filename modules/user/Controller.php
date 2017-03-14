@@ -12,6 +12,15 @@ class Controller extends ControllerBase{
     
     function startSession(){
         session_start();
+        if($_COOKIE['PHPSESSID'] && !$_COOKIE['apilabuser']){
+            setcookie('apilabuser',$_COOKIE['PHPSESSID'],time()+60*60*24*30);
+        }else{
+            $this->model->db->setLogger();
+            $user = $this->model->getUserCookie($_COOKIE['apilabuser']);
+            if($user){
+                $this->model->auth($user,1,$_COOKIE['apilabuser']);
+            }
+        }
     }
     
     function ajaxAuthVk($send){
@@ -46,10 +55,10 @@ class Controller extends ControllerBase{
     function ajaxAuth($send){
         $user = $this->model->getUser($send['login'],$send['password']);
         if($user){
-            return array(
-                'stat'=>1,
-                'cookie'=>$this->model->auth($user,$send['remember'])
-            );
+            $this->model->auth($user,$send['remember'],$_COOKIE['apilabuser']);
+            return [
+                'stat'=>1
+            ];
         }else{
             return array('error'=>'Некорректный логин / Пароль');
         }

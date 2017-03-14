@@ -34,12 +34,11 @@ class Core{
         
         $url = $this->getUrl();
         
+        if($url[0] != 'content'){
+            $this->module->user->startSession();
+        }
+        
         if($this->actions[$url[0]]){
-            
-            if($url[0] != 'content'){
-                $this->module->user->startSession();
-            }
-            
             $act = $this->actions[$url[0]];
             if(is_array($act)){
                 $set = (isset($act[2]) && isset($this->config['modules'][$act[2]])) ? $this->config['modules'][$act[2]] : null;
@@ -49,9 +48,8 @@ class Core{
                 $this->$act($url);
             }
             die();
-            
         }else{
-            $this->module->user->startSession();
+            //$this->module->user->startSession();
         }
     }
     
