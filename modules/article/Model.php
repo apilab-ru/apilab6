@@ -93,4 +93,12 @@ class Model extends \core\models\ModelBase
         }
         return $stat;
     }
+    
+    function getLastArticleByStruct($struct)
+    {
+        $art = $this->db->selectRow('select * from article where struct_id=?d && active=1 order by id DESC', $struct);
+        $art['image'] = $this->db->selectRow("select * from images where id=?d",$art['img_id']);
+        $art['tags'] = \core\Core::$app->module->tags->getTagsObject('article',$art['id']);
+        return $art;
+    }
 }

@@ -55,6 +55,7 @@ function article(){
     this.selectImage = function(myb){
         self.selectArtImage = function(image){
             $('.imgBox img').attr({src:'/content/images/'+image.id+"_0x0."+image.type});
+            $('.imgBox input').val(image.id);
             $win.close();
         }
         var $win = self.createPop('Выбор картинки',{

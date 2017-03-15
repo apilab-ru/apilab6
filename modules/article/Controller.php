@@ -70,4 +70,14 @@ class Controller extends \core\controllers\ControllerBase
             'action'=>'Редактирование статьи ' . ( ($param['id'])?"#{$param['id']}":"" )
         ];
     }
+    
+    function blockMain($block,$config,$pages)
+    {
+        $page = $pages[0];
+        $item = $this->model->getLastArticleByStruct($page['id']);
+        return [
+            'title'=>$item['title'],
+            'data'=>['item'=>$item]
+        ];
+    }
 }

@@ -2,7 +2,12 @@
 
 return [
     'templates'=>[
-        
+        "main"=>'Главная статья',
+        "list"=>'Список статьей'
+    ],
+    'templateToBlock'=>[
+        "main"=>['main'],
+        "list"=>['list']
     ],
     "source"=>[
         "admin"=>[
