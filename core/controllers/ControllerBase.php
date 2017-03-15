@@ -4,7 +4,6 @@ namespace core\controllers;
 
 abstract class ControllerBase
 {
-    
     function render($name,$arg=null)
     {
         
@@ -73,6 +72,30 @@ abstract class ControllerBase
             }
         }
         return $data;
+    }
+    
+    function __call($name,$argumnets)
+    {
+        return "Метод $name не найден";
+    }
+    
+    function block($act,$block,$config,$pages)
+    {
+        if(method_exists($this, 'block'.$act)){
+            ob_start();
+            $res = $this->{'block'.$act}($block,$config,$pages);
+            if($res['tpl']){
+                $tpl = $res['tpl'];
+            }else{
+                $tpl = $block['tpl'];
+            }
+            if($res['title']){
+                \core\Core::$app->module->page->setTitle($res['title']);
+            }
+            $res['data']['block'] = $block;
+            echo $this->render($tpl,$res['data']);
+            return ob_get_clean();
+        }
     }
     
 }
