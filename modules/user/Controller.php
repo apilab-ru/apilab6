@@ -15,7 +15,6 @@ class Controller extends ControllerBase{
         if($_COOKIE['PHPSESSID'] && !$_COOKIE['apilabuser']){
             setcookie('apilabuser',$_COOKIE['PHPSESSID'],time()+60*60*24*30);
         }else{
-            $this->model->db->setLogger();
             $user = $this->model->getUserCookie($_COOKIE['apilabuser']);
             if($user){
                 $this->model->auth($user,1,$_COOKIE['apilabuser']);
@@ -89,7 +88,6 @@ class Controller extends ControllerBase{
     
     function adminList($send){
         $list = $this->model->getList();
-        //pr($list);
         echo $this->render("admin/list",[
             'list'=>$list
         ]);

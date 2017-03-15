@@ -6,18 +6,10 @@ function autoLoader($class){
     
     if(strpos($class,'\\')){
         $class = explode('\\',$class);
-        
         $file = implode("/",$class);
-        
-        include $app.$file.".php";
-        
-        /*if($class[0]=='core'){
-            
-            /*$file = "{$core}/{$class[1]}/{$class[2]}.php";
-            include $file;*/
-            
-        /*}else{
-        }*/
+        if(file_exists($app.$file.".php")){
+            include $app.$file.".php";
+        }
     }
     
 }

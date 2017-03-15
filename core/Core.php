@@ -9,6 +9,7 @@ class Core{
     static $app;
     
     public $css;
+    public $js;
     public $module;
     
     function __construct($config)
@@ -49,7 +50,10 @@ class Core{
             }
             die();
         }else{
-            //$this->module->user->startSession();
+           $stat = $this->module->page->actionPage($url,$_GET);
+           if($stat === 404){
+               $this->error404();
+           }
         }
     }
     
@@ -127,17 +131,23 @@ class Core{
         if($this->modulesIsInit == 0){
             $this->modulesIsInit = 1;
             foreach($this->config['modules'] as $module=>$conf){
-                $file =  APP_DIR . "/modules/".$module."/composer.php";
-                if(file_exists($file)){
-                    $set = include $file;
-                    foreach($set['source'] as $key=>$param){
-                        foreach($param as $type=>$list){
-                            foreach($list as $name=>$it){
-                                if(is_string($name)){
-                                    $this->{$type}[$key][$name] = $it;
-                                }else{
-                                    $this->{$type}[$key][] = $it;
-                                }
+                $this->registerResource(APP_DIR . "/custom/".$module."/composer.php");
+                $this->registerResource(APP_DIR . "/modules/".$module."/composer.php");
+            }
+        }
+    }
+    
+    function registerResource($file) {
+        if (file_exists($file)) {
+            $set = include $file;
+            if(is_array($set['source'])){
+                foreach ($set['source'] as $key => $param) {
+                    foreach ($param as $type => $list) {
+                        foreach ($list as $name => $it) {
+                            if (is_string($name)) {
+                                $this->{$type}[$key][$name] = $it;
+                            } else {
+                                $this->{$type}[$key][] = $it;
                             }
                         }
                     }
@@ -145,7 +155,7 @@ class Core{
             }
         }
     }
-    
+
     function getVersion()
     {
         return $this->config['version'];
