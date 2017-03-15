@@ -143,4 +143,33 @@ class Controller extends \core\controllers\ControllerBase
     {
         pr('param',$param);
     }
+    
+    //BLOCKS
+    function blockListDocs($block,$config,$pages)
+    {
+        if($config['struct_id']=='my'){
+           $config['struct_id'] =  $pages[0]['id'];
+        }
+        $data = $this->model->getListDocs($config);
+        return [
+            'data'=>$data,
+            'tpl'=>'listFiles'
+        ];
+    }
+    
+    function blockListImages($block,$config,$pages)
+    {
+        if($config['struct_id']=='my'){
+           $config['struct_id'] =  $pages[0]['id'];
+        }
+        $data = $this->model->getListImages($config);
+        if(!$config['imageTpl']){
+            $config['imageTpl'] = 'list';
+        }
+        $data['imageTpl'] = $config['imageTpl'];
+        return [
+            'data'=>$data,
+            'tpl'=>'listImages',
+        ];
+    }
 }

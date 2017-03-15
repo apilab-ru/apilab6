@@ -31,6 +31,43 @@ class Model extends \core\models\ModelBase
         return $list;
     }
     
+    function getListDocs($params)
+    {
+        $filter = $this->extendFilter($param);
+        $select = [
+            'files.*'
+        ];
+        $from = [
+            'files',
+        ];
+        $where = [];
+        if($param['struct_id']){
+            $where[] = "struct_id=".$param['struct_id'];
+        }
+        
+        $limit = " limit ".(($filter['page'] - 1)*$filter['limit']).",".$filter['limit'];    
+        
+        $sql = "select SQL_CALC_FOUND_ROWS ".implode(",",$select)
+                ." from ".implode(',',$from);
+        
+        if($where){
+            $sql .= " where " . implode(" && ",$where);
+        }
+         
+        $sql.= " order by id DESC " . $limit;
+        
+        $list = $this->db->select($sql);
+        
+        $count = $this->db->selectCell("SELECT FOUND_ROWS()");
+        
+        return [
+            'list'=>$list,
+            'count'=>$count,
+            'limit'=>$filter['limit'],
+            'page'=>$filter['page']
+        ];
+    }
+    
     function getListImages($param)
     {
         $filter = $this->extendFilter($param);
@@ -44,6 +81,10 @@ class Model extends \core\models\ModelBase
         ];
         
         $where = [];
+        
+        if($param['staruct_id']){
+            $param['struct'] = $param['staruct_id'];
+        }
         
         if($param['struct']){
             $where[] = "struct_id=".$param['struct'];
