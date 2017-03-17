@@ -2,7 +2,12 @@
 
 return [
     'templates'=>[
-        
+        "listFiles"=>'Список файлов',
+        "listImages"=>'Галаерея картинок'
+    ],
+    'templateToBlock'=>[
+        "listFiles"=>['listFiles'],
+        'listImages'=>['listImages']
     ],
     "source"=>[
         "admin"=>[

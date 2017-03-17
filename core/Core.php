@@ -12,6 +12,9 @@ class Core{
     public $js;
     public $module;
     
+    public $templates = array();
+    public $templateToBlock = array();
+    
     function __construct($config)
     {
         
@@ -27,7 +30,7 @@ class Core{
         $this->js = $config['js'];
         
         $this->module = new controllers\Modules($config['modules']);
-        
+        $this->initModules();
     }
     
     function run()
@@ -131,13 +134,13 @@ class Core{
         if($this->modulesIsInit == 0){
             $this->modulesIsInit = 1;
             foreach($this->config['modules'] as $module=>$conf){
-                $this->registerResource(APP_DIR . "/custom/".$module."/composer.php");
-                $this->registerResource(APP_DIR . "/modules/".$module."/composer.php");
+                $this->registerResource(APP_DIR . "/custom/".$module."/composer.php",$module);
+                $this->registerResource(APP_DIR . "/modules/".$module."/composer.php",$module);
             }
         }
     }
     
-    function registerResource($file) {
+    function registerResource($file,$module) {
         if (file_exists($file)) {
             $set = include $file;
             if(is_array($set['source'])){
@@ -150,6 +153,18 @@ class Core{
                                 $this->{$type}[$key][] = $it;
                             }
                         }
+                    }
+                }
+            }
+            if(is_array($set['templates'])){
+                foreach($set['templates'] as $key=>$tpl){
+                    $this->templates[$module][$key] = $tpl;
+                }
+            }
+            if ($set['templateToBlock']) {
+                foreach ($set['templateToBlock'] as $set => $list) {
+                    foreach ($list as $item) {
+                        $this->templateToBlock[$module][$set][] = $item;
                     }
                 }
             }

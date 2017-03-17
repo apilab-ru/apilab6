@@ -1,0 +1,81 @@
+.adminBlocks{
+    position: relative;
+}
+.adminBlocks iframe{
+    border: 2px dashed;
+}
+.adminBlocks .rightPanel{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 170px;
+    padding: 10px;
+    background: #fff;
+    opacity: 0.6;
+    border: 1px solid #222d32;
+}
+.adminBlocks .rightPanel:hover{
+    opacity: 1;
+}
+.adminBlocks .togle{
+    background-color: transparent;
+    background-image: none;
+    padding: 8px 12px;
+    font-family: fontAwesome;
+    display: inline-block;
+    border-right: 1px solid #eee;
+    border-left: 1px solid #eee;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.adminBlocks .togleLine {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+    white-space: nowrap;
+}
+.adminBlocks .togle:before{
+    content: "\f0c9";
+}
+.adminBlocks .togleBox{
+    overflow: hidden;
+    transition: 0.5s;
+    min-height: 170px
+}
+.adminBlocks .togleBox.slide{
+    width: 38px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
+}
+
+.adminBlocks .togleBox.slide ul{
+    display: none;
+}
+
+.adminBlocks .togleBox .curNav{
+    transform: rotate(90deg);
+    display: none;
+    padding-left: 10px;
+}
+.adminBlocks .togleBox.slide .curNav{
+    display: block;
+}
+
+.adminBlocks .botPanel{
+    position: absolute;
+    bottom: 0px;
+    right:0px;
+    padding: 10px;
+    background: #fff;
+    opacity: 0.9;
+    border:1px solid;
+}
+
+.editBlock .line.config {
+    background: #ebebeb;
+    flex-wrap: wrap;
+}
+.editBlock .line.config:empty{
+    display: none;
+}

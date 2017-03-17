@@ -1,0 +1,38 @@
+.JQDgroup{
+    border-left:3px solid yellow;
+    box-shadow: 0px 0px 1px yellow;
+    border-bottom: 1px dashed;
+}
+.JQDgroup.onOver{
+    background: yellowgreen;
+}
+.JQDgroup gr{
+    background: yellow;
+    padding: 5px;
+    display: block;
+}
+.JQDgroup.onOver gr{
+    background: yellowgreen;
+}
+.JQDblock{
+    box-shadow: 0px 0px 1px green;
+    border-left:3px solid green;
+    border-bottom: 1px dotted;
+}
+.JQDblock.edit{
+    
+}
+.JQDblock.edit bl{
+    background: #265a88;
+}
+.JQDblock bl{
+    padding: 3px;
+    background: green;
+    display: flex;
+    align-content: space-around;
+    color:#fff;
+}
+.JQDblock bl .control{
+    margin-left: 10px;
+    cursor: pointer;
+}

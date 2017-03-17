@@ -181,6 +181,12 @@ function base(){
             });
         }
         
+        regRes.load('ui',function(){
+            $div.draggable({
+                handle:'.popTitle'
+            });
+        });
+        
         $div.toCenter();
 
         return $div;

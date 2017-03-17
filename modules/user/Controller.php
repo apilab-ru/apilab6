@@ -79,7 +79,7 @@ class Controller extends ControllerBase{
         
         return [
             "act"=>"list",
-            "name"=>"Сотрудники",
+            "name"=>"Пользователи",
             "icon"=>"admin-icon-users",
             "description"=>'Управление пользователями сайта'
         ];

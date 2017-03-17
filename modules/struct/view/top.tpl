@@ -1,5 +1,5 @@
 {strip}
-<div class="menu JQDblock">
+<div class="menu JQDblock" myid="{$block.id}">
     <ul>
         {foreach from=$list item=item name=foo}
         <li class="item {if $item.check}check{/if}">

@@ -19,4 +19,9 @@ class Modules
            return $this->$name = new $class( $this->set[$name] ); 
         }
     }
+    
+    function getList()
+    {
+        return $this->set;
+    }
 }

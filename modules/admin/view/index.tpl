@@ -224,6 +224,7 @@
         <li class="header">Модули</li>
         
         {foreach from=$modulesActions item=item key=module}
+            {if $item}
             <li>
                 <a {if $item.act}href="/admin/{$module}/{$item.act}"{/if}>
                     <i class="{$item.icon}"></i> 
@@ -247,6 +248,7 @@
                     </ul>
                 {/if}
             </li>
+            {/if}
         {/foreach}
         
       </ul>

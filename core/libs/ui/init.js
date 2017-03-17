@@ -1,0 +1,1 @@
+PageStyles.load('/core/libs/ui/jquery-ui.min.css');

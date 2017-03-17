@@ -1,6 +1,6 @@
 {strip}
 {foreach from=$list item=item}
-    <option value="{$item.id}" {if $item.id==$struct}selected{/if}>{$before} {$item.title} </option>
+    <option value="{$item.id}" {if $item.id==$struct}selected{/if}>{$before} {$item.name} </option>
     {if $item.childNodes}
         {include file="select"|getTpl:$tplPath list=$item.childNodes before=$before|cat:"--"}
     {/if}

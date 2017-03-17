@@ -24,11 +24,13 @@
     box-sizing: border-box;
     border: 1px solid #d6d4d4;
     border-radius: 1px;
-    z-index: 999;
+    z-index: 9999;
 }
 .popWin .popContent{
     padding: 10px;
     background: #fff;
+    max-height: calc(100vh - 80px);
+    overflow: auto;
 }
 .popWin .popTitle{
     text-align: center;
@@ -80,3 +82,53 @@
     margin: 30px auto;
     color: #000!important;
 }
+
+/* list docs */
+.listDocs{
+    max-width: 908px;
+    margin: 10px auto;
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid #8a6634;
+    padding-top: 10px;
+}
+.listDocs .item{
+    flex: 1 1 23%;
+    padding: 8px 10px;
+    margin: 10px;
+    border: 1px solid rgba(138, 102, 52, 0.12);
+    background: #fffdf7;
+    color:#000;
+    word-wrap: normal;
+    white-space: nowrap;
+    max-width: 40vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/*txt*/
+/*
+.listDocs .item:before{
+    content: "\e924";
+    font-family: 'icomoon' !important;
+    float: left;
+    font-size: 40px;
+    font-weight: normal;
+    margin-right: 5px;
+    color: #8a6634;
+}
+//exel 
+.listDocs .item.xlsx:before , .item.xls:before{
+    content: "\eadd";
+    color:#1c7114;
+}
+/pdf/
+.listDocs .item.pdf:before{
+    content: "\eada";
+    color:#a31e2b;
+}
+doc
+.listDocs .item.doc:before,.item.docx:before{
+    content: "\eadc";
+    color:#04409b;
+}
+*/

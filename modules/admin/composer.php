@@ -29,6 +29,10 @@ return [
                 "datetimepicker"=>[
                     "/core/libs/datetimepicker/jquery.datetimepicker.full.min.js?1",
                     "/core/libs/datetimepicker/init.js?1"
+                ],
+                "ui"=>[
+                    "/core/libs/ui/jquery-ui.min.js",
+                    "/core/libs/ui/init.js"
                 ]
            ]
         ]

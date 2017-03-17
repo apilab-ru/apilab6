@@ -58,3 +58,16 @@
     margin-bottom: 2px;
     cursor: pointer;
 }
+
+.editForm .line{
+    padding: 3px;
+    margin-bottom: 10px;
+    display: flex;
+    width: 100%;
+}
+.editForm .line .nameCell{
+    width:100px;
+}
+.editForm .line .cell{
+    flex: 1;
+}

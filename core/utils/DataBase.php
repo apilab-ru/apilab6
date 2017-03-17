@@ -54,6 +54,12 @@ class DataBase
         return call_user_func_array([$this->db,'selectCell'], $args);
     }
     
+    function selectCol()
+    {
+        $args = func_get_args();
+        return call_user_func_array([$this->db,'selectCol'], $args);
+    }
+    
     function query()
     {
         $args = func_get_args();

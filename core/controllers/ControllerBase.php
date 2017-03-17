@@ -98,4 +98,25 @@ abstract class ControllerBase
         }
     }
     
+    function blockConfig($act)
+    {
+        if(method_exists($this, 'blockConfig'.$act)){
+            return $this->{'blockConfig'.$act}();
+        }
+    }
+    
+    function getNameAction($act)
+    {
+        return $this->actions[$act]['name'];
+    }
+    
+    function getNameModule()
+    {
+        if(method_exists($this, 'getAdminActions')){
+            return $this->getAdminActions()['name'];
+        }else{
+            return null;
+        }
+    }
+    
 }

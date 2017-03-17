@@ -101,4 +101,9 @@ class Model extends \core\models\ModelBase
         $art['tags'] = \core\Core::$app->module->tags->getTagsObject('article',$art['id']);
         return $art;
     }
+    
+    function getListArticleSelect()
+    {
+        return $this->db->selectCol("select id as ARRAY_KEY,CONCAT_WS(' ','#',id,title) as ARRAY_VALUE from article where active=1 order by id DESC");
+    }
 }

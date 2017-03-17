@@ -71,6 +71,30 @@ class Controller extends \core\controllers\ControllerBase
         ];
     }
     
+    
+    /* blocks */
+    public $actions = [
+        'main'=>[
+            'name'=>'Центральная статья'
+        ]
+    ];
+    
+    function blockConfigMain()
+    {
+        return [
+            'struct_id'=>[
+                'name'=>'Раздел структуры',
+                'type'=>'select',
+                'podtype'=>'struct'
+            ],
+            'article'=>[
+                'name'=>'Конкретная статья',
+                'type'=>'select',
+                'list'=>$this->model->getListArticleSelect()
+            ]
+        ];
+    }
+    
     function blockMain($block,$config,$pages)
     {
         $page = $pages[0];

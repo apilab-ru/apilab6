@@ -36,7 +36,9 @@ return [
         ],
         "log"=>[],
         "tags"=>[],
-        "page"=>[]
+        "page"=>[],
+        "struct"=>[],
+        "html"=>[]
     ],
     "version"=>"6.0.1"
 ];

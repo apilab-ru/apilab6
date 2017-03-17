@@ -48,3 +48,6 @@
 .admin-icon-files:before {
   content: "\eae3";
 }
+.admin-icon-file-picture:before{
+   content: "\e927";
+}

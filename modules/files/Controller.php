@@ -55,12 +55,12 @@ class Controller extends \core\controllers\ControllerBase
                 "templates"=>array(
                     "act"=>"templates",
                     "name"=>"Шаблоны картинок",
-                    "icon"=>"",
+                    "icon"=>"admin-icon-file-picture",
                 ),
                 "docs"=>array(
                     "act"=>"docs",
-                    "name"=>"Файлы",
-                    "icon"=>"",
+                    "name"=>"Документы",
+                    "icon"=>"admin-icon-files",
                 )
             )
         ];
@@ -145,6 +145,16 @@ class Controller extends \core\controllers\ControllerBase
     }
     
     //BLOCKS
+    
+    public $actions = [
+        'listDocs'=>[
+            'name'=>'Список документов'
+        ],
+        'listImages'=>[
+            'name'=>'Галерея фотографий'
+        ]
+    ];
+    
     function blockListDocs($block,$config,$pages)
     {
         if($config['struct_id']=='my'){

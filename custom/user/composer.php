@@ -1,10 +1,14 @@
 <?php
 
 return [
-    'tempates' => [
-        "auth" => 'Авторизация'
+    'templates'=>[
+        'cust:auth'=>'Авторизация особая',
     ],
-    'style' => 'user.css',
-    'js'    => 'user.js'
+    "source"=>[
+        "add"=>[
+            "css"=>[],
+            "js"=>[]
+        ]
+    ]
 ];
 
