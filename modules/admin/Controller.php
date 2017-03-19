@@ -27,7 +27,7 @@ class Controller extends \core\controllers\ControllerBase
             'user' => $user,
             'version'=>$this->model->core->getVersion(),
             'content'=>$content,
-            'modulesActions'=>$this->model->getModulesActions()
+            'modulesActions'=>$this->model->getModulesActions($url[1],$url[2])
         ]);
     }
     

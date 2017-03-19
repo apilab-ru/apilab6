@@ -3,11 +3,14 @@
 return [
     'templates'=>[
         "main"=>'Главная статья',
-        "list"=>'Список статьей'
+        "list"=>'Список статьей',
+        "bootstrapList"=>"Список новостей bootstrap",
+        "bootstrapItem"=>"Статья bootstrap"
     ],
     'templateToBlock'=>[
         "main"=>['main'],
-        "list"=>['list']
+        "list"=>['list','bootstrapList'],
+        "item"=>["bootstrapItem"]
     ],
     "source"=>[
         "admin"=>[

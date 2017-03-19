@@ -2,10 +2,13 @@ function struct(){
     this.name = "struct";
     var self = this;
     this.from = "/";
+    this.nav = null;
+    this.alias = null;
     
     this.selectNav = function(id,alias,myb){
         $('#page').attr({src:alias});
         self.nav = id;
+        self.alias = alias;
         $('.curNav').html( $(myb).find('.n').text() );
     }
     
@@ -14,6 +17,14 @@ function struct(){
             self.client = myb.contentWindow.window.structClient;
             self.initClient();
         })
+    }
+    
+    this.openCurrent = function(){
+        if(self.alias == null){
+            popUp('Выберите раздел структуры');
+            return false;
+        }
+        window.open(self.alias);
     }
     
     this.initClient = function(){
@@ -41,8 +52,12 @@ function struct(){
     }
     
     this.addBlock = function () {
+        if(self.nav == null){
+            popUp('Выберите раздел структуры');
+            return false;
+        }
         var block = {model:null};
-        var $win = self.createPop('Добавление блока #', null);
+        var $win = self.createPop('Добавление блока', null);
         self.post('editBlock', {
             block: block
         }, function (re, mas) {
@@ -160,6 +175,7 @@ function struct(){
     
     this.selectOptions = function(list,check){
         var html = '';
+        console.log('selectOptions',list);
         $.each(list,function(n,i){
             var name = ($.type(i)=='string') ? i : i.name;
             html+= "<option value='"+n+"' "+((n==check)?'selected':'')+" >"+name+"</option>";

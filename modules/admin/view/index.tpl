@@ -225,7 +225,7 @@
         
         {foreach from=$modulesActions item=item key=module}
             {if $item}
-            <li>
+            <li class="{if $item.check}active{/if}">
                 <a {if $item.act}href="/admin/{$module}/{$item.act}"{/if}>
                     <i class="{$item.icon}"></i> 
                     <span>{$item.name}</span>
@@ -238,7 +238,7 @@
                 {if $item.list}
                     <ul class="treeview-menu">
                         {foreach from=$item.list item=item2}
-                        <li>
+                        <li class="{if $item2.check}active{/if}">
                             <a href="/admin/{$module}/{$item2.act}">
                                 <i class="{$item2.icon}"></i> 
                                 <span>{$item2.name}</span>

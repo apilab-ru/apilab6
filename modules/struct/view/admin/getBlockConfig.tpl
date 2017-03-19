@@ -2,18 +2,21 @@
     <div class="line">
         <div class='nameCell'> {$item.name} </div>
         <div class='cell'>
-        {if $item.type == 'select'}
-            <select name='{$key}'>
+        {if $item.type == 'select' || $item.type == 'multiselect'}
+            <select name='{$key}' {if $item.type == 'multiselect'}multiple{/if}>
                 {if $item.podtype=='struct'}
-                    <option value='my' checked> -- Из текущего -- </option>
+                    <option value='my' selected> -- Из текущего -- </option>
                     {widget name='struct' tpl='select' struct=$config[$key] all=1}
                 {else}
                     <option value=""> --- </option>
                     {foreach from=$item.list item=it key=itemKey}
-                        <option value="{$itemKey}"> {$it} </option>
+                        <option value="{$itemKey}" {if $itemKey|checked:$config[$key]}selected{/if}> {$it} </option>
                     {/foreach}
                 {/if}
             </select>
+        {/if}
+        {if $item.type == 'number'}
+            <input type='number' name='{$key}' value='{$config[$key]}'/>
         {/if}
         </div>
         {if $item.actions}

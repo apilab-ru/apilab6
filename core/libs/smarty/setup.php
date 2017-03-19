@@ -8,7 +8,7 @@ function appGetTemplate($tpl_name, &$tpl_source, $smarty) {
     if(file_exists($file)){
         $tpl_source = file_get_contents($file);
     }else{
-        $tpl_source = "<div class='alert alert-danger'> Шаблон $tpl_name не найден </div>";
+        $tpl_source = '<div  class="JQDblock alert alert-danger" myid="{$block.id}"> Шаблон '.$tpl_name.' не найден </div>';
     }
     return true;
 }

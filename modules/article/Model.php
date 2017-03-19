@@ -11,6 +11,16 @@ class Model extends \core\models\ModelBase
         $this->filter = $param;
     }
     
+    function getTags()
+    {
+        $data =  $this->core->module->tags->getList();
+        $list = array();
+        foreach($data as $it){
+            $list[$it['id']] = $it['name'];
+        }
+        return $list;
+    }
+    
     function getListArticle($filter)
     {
         
@@ -55,10 +65,23 @@ class Model extends \core\models\ModelBase
         
         $list = $this->db->select($sql);
         
+        $count = $this->db->selectCell("SELECT FOUND_ROWS()");
+        
+        $images = [];
+        foreach($list as $item){
+            $images[] = $item['img_id'];
+        }
+        
+        $images = $this->db->select("select *,id as ARRAY_KEY from images where id in (?a)",$images);
+        
+        foreach($list as $key=>$item){
+            $list[$key]['image'] = $images[$item['img_id']];
+        }
+        
         return [
             'list'=>$list,
             'page'=>$page,
-            'count'=>$this->db->selectCell("SELECT FOUND_ROWS()"),
+            'count'=>$count,
             'limit'=>$filter['limit']
         ];
         
@@ -105,5 +128,20 @@ class Model extends \core\models\ModelBase
     function getListArticleSelect()
     {
         return $this->db->selectCol("select id as ARRAY_KEY,CONCAT_WS(' ','#',id,title) as ARRAY_VALUE from article where active=1 order by id DESC");
+    }
+    
+    function getItemTemplate()
+    {
+        $list = array();
+        $template = $this->core->templates['article'];
+        foreach($this->core->templateToBlock['article']['item'] as $it){
+            $list[$it] = $template[$it];
+        }
+        return $list;
+    }
+    
+    function getTemplatesImages()
+    {
+        return $this->db->selectCol("select `alias` as ARRAY_KEY,`title` as ARRAY_VALUE from img_templates");
     }
 }

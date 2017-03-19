@@ -68,8 +68,6 @@ class Model extends \core\models\ModelBase
     {
         $modules = $groups[0];
         
-        $this->db->setLogger();
-        
         $updates = array();
         unset($groups[0]);
         foreach($modules as $item){

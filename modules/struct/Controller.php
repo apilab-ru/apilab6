@@ -85,6 +85,15 @@ class Controller extends ControllerBase{
     function ajaxGetBlockConfig($send)
     {
         $set = $this->model->core->module->{$send['model']}->blockConfig($send['act']);
+        if(!$send['config']){
+            $send['config'] = array();
+        }
+        foreach($set as $key=>$it){
+            if($it['default'] && !$send['config'][$key]){
+                $send['config'][$key] = $it['default'];
+            }
+        }
+        
         echo $this->render('admin/getBlockConfig',[
             'set'=>$set,
             'config'=>$send['config']
@@ -128,6 +137,7 @@ class Controller extends ControllerBase{
     {
         return [
             'data'=>[
+                'isChild'=>($pages[0]['parent']!=0),
                 'list'=>$this->model->getStructList($pages[0])
              ]
         ];

@@ -5,6 +5,7 @@ namespace modules\article;
 class Controller extends \core\controllers\ControllerBase
 {
     function __construct($param=null) {
+        $this->param = $param;
         $this->model = new Model($param);
     }
     
@@ -76,6 +77,9 @@ class Controller extends \core\controllers\ControllerBase
     public $actions = [
         'main'=>[
             'name'=>'Центральная статья'
+        ],
+        'list'=>[
+            'name'=>'Список новостей'
         ]
     ];
     
@@ -95,6 +99,46 @@ class Controller extends \core\controllers\ControllerBase
         ];
     }
     
+    function blockConfigList()
+    {
+        return [
+           'struct'=>[
+                'name'=>'Раздел структуры',
+                'type'=>'select',
+                'podtype'=>'struct',
+                'default'=>'my'
+            ], 
+            'tags'=>[
+                'name'=>'Теги',
+                'type'=>'multiselect',
+                'list'=>$this->model->getTags()
+            ],
+            "templateItem"=>[
+                "name"=>"Шаблон статьи внутри",
+                "type"=>"select",
+                "list"=>$this->model->getItemTemplate(),
+                "default"=>"bootstrapItem"
+            ],
+            "imgTpl"=>[
+                "name"=>"Шаблон картинки в листе",
+                "type"=>"select",
+                "list"=>$this->model->getTemplatesImages(),
+                "default"=>"art"
+            ],
+            "imgItemTpl"=>[
+                "name"=>"Шаблон картинки внутри",
+                "type"=>"select",
+                "list"=>$this->model->getTemplatesImages(),
+                "default"=>"art"
+            ],
+            "limit"=>[
+                "name"=>"Новостей на страницу",
+                "type"=>"number",
+                "default"=>$this->param['limit']
+            ]
+        ];
+    }
+    
     function blockMain($block,$config,$pages)
     {
         $page = $pages[0];
@@ -102,6 +146,34 @@ class Controller extends \core\controllers\ControllerBase
         return [
             'title'=>$item['title'],
             'data'=>['item'=>$item]
+        ];
+    }
+    
+    function blockList($block,$config,$pages)
+    {
+        $page = $pages[0];
+        if($config['struct'] == 'my' || !$config){
+            $config['struct'] = $page['id'];
+        }
+        
+        if($block['group']==0){
+            //Модульный блок
+            if($_REQUEST['art']){
+                return [
+                    'data'=>[
+                        'article'=>$this->model->getArticle($_REQUEST['art'])
+                    ],
+                    'imgTpl'=>$config['imgItemTpl'],
+                    'tpl'=>($config['templateItem']) ? $config['templateItem'] : $this->blockConfigList()['templateItem']['default']
+                ];
+            }
+        }
+        
+        $data = $this->model->getListArticle($config);
+        $data['imgTpl'] = $config['imgTpl'];
+        
+        return [
+            'data'=>$data
         ];
     }
 }

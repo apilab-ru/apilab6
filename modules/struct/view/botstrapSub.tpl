@@ -1,6 +1,6 @@
 {strip}
 <ul class="dropdown-menu">
-    <li class='active'> <a href="/{if $first.alias}{$first.alias}/{/if}">{$first.name}</a></li>
+    <li {if !$isChild}class='active'{/if}> <a href="/{if $first.alias}{$first.alias}/{/if}">{$first.name}</a></li>
     <li role="separator" class="divider"></li>
     {foreach from=$list item=item}
         <li class='{if $item.check}active{/if}'> 
