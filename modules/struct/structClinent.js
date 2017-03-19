@@ -30,12 +30,15 @@ function structClient(){
                     var draggable = $(i.draggable[0]);
                     $(parent).append(draggable);
                     $(draggable).css({'top': '0px', 'left': '0px'});
+                    if(draggable.data('callback')){
+                        draggable.data('callback')();
+                    }
                 }
             });
         });
         
         self.parent = parent;
-        PageStyles.load('/modules/struct/structClient.css?2');
+        PageStyles.load('/modules/struct/structClient.css?4');
         $('.JQDgroup').each(function(n,i){
             var myid = $(i).attr('myid');
             if(myid=='0'){
@@ -95,6 +98,47 @@ function structClient(){
             })
         });
         return groups;
+    }
+    
+    this.addBlock = function (block) {
+
+        var $block = $('<div/>', {
+            class: 'JQDblock newBlock',
+            html: 'Ноый блок'
+        }).draggable();
+
+        $block.setCallback = function (call) {
+            $block.data('callback', function(){
+                call();
+                $block.data('callback', null);
+                $block.css({position:'relative'});
+                $block.removeClass('newBlock');
+            });
+        }
+
+        $block.on('click', '.control.edit', function () {
+            $('.JQDblock.edit').removeClass('edit');
+            $block.addClass('edit');
+            $block.deactiveEdit = function () {
+                $block.removeClass('edit');
+            }
+            self.parent.editBlock(block, $block);
+        });
+        $block.on('click', '.control.delete', function () {
+            $block.remove();
+        });
+        $block.data('getBlock', function () {
+            return block;
+        })
+        
+        $block.css({
+            top:$('body').scrollTop(),
+            position:'absolute'
+        });
+        
+        $('body').append( $block );
+
+        return $block;
     }
     
 }

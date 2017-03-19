@@ -72,6 +72,10 @@ class DataBase
         return $this->db->query('insert into ?# (?#) values (?a)',$table,array_keys($row),array_values($row));
     }
     
+    function update($table,$row,$id){
+        return $this->db->query('update ?# set ?a where id=?d',$table,$row,$id);
+    }
+    
     function getError()
     {
         return $this->db->getErrors();

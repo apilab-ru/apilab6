@@ -12,6 +12,7 @@
         <iframe id='page' class='popIframe' onload='struct.iframeLoad(this)'></iframe>
     </div>
     <div class='botPanel'>
+        <span class="btn btn-primary" onclick="struct.addBlock()"> Добавить </span>
         <span class="btn btn-success" onclick="struct.saveNav()"> Сохранить </span>
     </div>
 </div>

@@ -31,8 +31,17 @@
     display: flex;
     align-content: space-around;
     color:#fff;
+    width: 100%;
 }
 .JQDblock bl .control{
     margin-left: 10px;
+    cursor: pointer;
+}
+.newBlock{
+    font-size: 20px;
+    background: green;
+    color: #fff;
+    padding: 20px;
+    border: 3px dashed #fff;
     cursor: pointer;
 }

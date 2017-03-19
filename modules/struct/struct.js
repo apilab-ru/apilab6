@@ -22,9 +22,12 @@ function struct(){
     
     this.saveNav = function(){
         var groups = self.client.getGroups();
-        console.log('groups',groups);
         self.post('updatePage',{groups:groups,page:self.nav},function(re,mas){
-            console.log('updatePage',re,mas);
+            if(mas.stat){
+                popUp('Успешно');
+            }else{
+                popUp('Ошибка');
+            }
         })
     }
     
@@ -35,6 +38,39 @@ function struct(){
         }else{
             $box.addClass('slide'); 
         }
+    }
+    
+    this.addBlock = function () {
+        var block = {model:null};
+        var $win = self.createPop('Добавление блока #', null);
+        self.post('editBlock', {
+            block: block
+        }, function (re, mas) {
+            $win.update(re);
+            self.initEditBlock($win, mas, block);
+        });
+
+        $win.on('click', '.controlSet', function () {
+            block.model = $win.find('#model').val();
+            block.act = $win.find('#act').val();
+            if ($win.find('#tpl').is(':visible')) {
+                block.tpl = $win.find('#tpl').val();
+            } else {
+                block.tpl = null;
+            }
+            block.config = self.getFormConfig($win.find('.config'));
+            
+            var $block = self.client.addBlock(block);
+            
+            $block.setCallback(function(){
+                self.post('renderBlock', {block: block, nav: self.nav}, function (re, mas) {
+                    var $re = $(re);
+                    $block.html($re.html());
+                    $block.prepend(mas.control);
+                })
+            });
+            
+        })
     }
     
     this.editBlock = function(block,$block){

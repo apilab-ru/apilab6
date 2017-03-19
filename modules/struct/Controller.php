@@ -56,8 +56,10 @@ class Controller extends ControllerBase{
     
     function ajaxUpdatePage($send)
     {
-        pr($send);
-        $this->model->updatePage($send['groups'],$send['page']);
+        $this->model->db->setLogger();
+        return [
+            'stat'=>$this->model->updatePage($send['groups'],$send['page'])
+        ];
     }
     
     function viewControlBlock($block){
@@ -70,7 +72,6 @@ class Controller extends ControllerBase{
     {
         $modules = $this->model->getModules();
         $templates = $this->model->getTemplates();
-        //pr($send,$modules);
         echo $this->render('admin/editBlock',[
             'block'=>$send['block'],
             'modules'=>$modules
