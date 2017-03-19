@@ -2,6 +2,7 @@ function admin(){
     
     var self = this;
     this.name = 'admin';
+    this.curModule = null;
     
     this.init = function(){
         $(document).on('click','.adminMenu a',function(event){
@@ -10,9 +11,8 @@ function admin(){
             if(data){
                 self.history(data,null,$(this).find('span').text());
                 data = data.split("/");
-                self.post('getContent',{module:data[2],action:data[3]},function(re){
-                    $('.boxContent').html(re);
-                })
+                self.curModule = {module:data[2],action:data[3]};
+                self.reloadModule();
             }
             
             var $li = $(this).parents('li:first');
@@ -29,6 +29,18 @@ function admin(){
             $(this).addClass('active');
         })
         
+    }
+    
+    this.reloadModule = function () {
+        
+        if(!self.curModule){
+            var data = location.pathname.split('/');
+            self.curModule = {module:data[2],action:data[3]};
+        }
+        
+        self.post('getContent', self.curModule, function (re) {
+            $('.boxContent').html(re);
+        })
     }
     
     this.struct = function(module,act){
@@ -80,6 +92,16 @@ function admin(){
    this.call = function(module){
        return function(action,param,callback){
            self.history(null,param);
+           self.post('module',{
+               module:module,
+               action:action,
+               param:param,
+           },callback)
+       }
+   }
+   
+   this.ajax = function(module){
+       return function(action,param,callback){
            self.post('module',{
                module:module,
                action:action,

@@ -42,7 +42,6 @@ function article(){
             article:data,
             id:self.getFilter().id
         },function(re,mas){
-            console.log('saveArticle',re,mas);
             if(mas.stat){
                 popUp('Успешно');
                 $('a[href="/admin/article/list"]:first').click();

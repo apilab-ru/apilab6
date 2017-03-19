@@ -64,10 +64,25 @@
     margin-bottom: 10px;
     display: flex;
     width: 100%;
+    align-items: center;
+}
+.editForm .line.right{
+    justify-content: flex-end;
 }
 .editForm .line .nameCell{
     width:100px;
 }
 .editForm .line .cell{
     flex: 1;
+}
+.editForm .line .cell > input{
+   max-width: 100%;
+   min-width: 200px;
+}
+.editForm .line .cell textarea{
+    width: 100%;
+}
+
+.cke.cke_reset {
+    width: 99.5%;
 }

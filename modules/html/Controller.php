@@ -12,9 +12,40 @@ class Controller extends ControllerBase{
     function getAdminActions()
     {
         return [
+            "act"=>"list",
             "name"=>"Html блоки",
             "icon"=>"admin-icon-files",
             "description"=>'Управление Html блоками',
+        ];
+    }
+    
+    function adminList()
+    {
+        $list = $this->model->getList();
+        echo $this->render('admin/list',[
+            'list'=>$list
+        ]);
+    }
+    
+    function adminAjaxEditHtmlBlock($send)
+    {
+        if($send['id']){
+            $block = $this->model->getHtmlBlock($send['id']);
+        }else{
+            $block = array();
+        }
+        echo $this->render('admin/editHtmlBlock',[
+            'block'=>$block
+        ]);
+    }
+    
+    function adminAjaxSaveHtmlBlock($send){
+        $stat = $this->model->saveHtmlBlock($send['block'],$send['id']);
+        unset($set['html']);
+        return [
+            'stat'=>$stat,
+            'id'=>$send['id'],
+            'mas'=>$send['block']
         ];
     }
     
