@@ -16,11 +16,22 @@
     width:350px;
     padding-left: 30px;
 }
+.d-flex .f-left{
+    width:350px;
+    padding-right: 30px;
+}
 .d-flex .f-1{
     flex:1;
 }
+.margin-right{
+    margin-right: 30px;
+}
 
-
+.btnControll{
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+}
 
 .structNav ul{
     margin-left: 20px;
@@ -70,7 +81,8 @@
     justify-content: flex-end;
 }
 .editForm .line .nameCell{
-    width:100px;
+    width: 150px;
+    margin-bottom: 0px;
 }
 .editForm .line .cell{
     flex: 1;
@@ -85,4 +97,28 @@
 
 .cke.cke_reset {
     width: 99.5%;
+}
+
+
+.checkboxLabel input{
+    display: none;
+}
+.checkboxLabel input:checked + span:before{
+    content: "\e013";
+    font-family: 'Glyphicons Halflings';
+    position: absolute;
+    top: -2px;
+    left: 2px;
+}
+.checkboxLabel span{
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid #ccc;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    border-radius: 2px;
+}
+.flexSubmit{
+    justify-content: flex-end;
 }

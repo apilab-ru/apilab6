@@ -87,7 +87,8 @@ class Model extends \core\models\ModelBase
         return 1;
     }
     
-    function saveBlock($item) {
+    function saveBlock($item) 
+    {
         if($item['config'] && is_array($item['config'])){
             $item['config'] = json_encode($item['config']);
         }
@@ -101,5 +102,31 @@ class Model extends \core\models\ModelBase
             return $this->db->insert('blocks', $item);
         }
     }
+    
+    function getPage($id)
+    {
+        return $this->db->selectRow('select * from struct where id=?d',$id);
+    }
+    
+    function saveRazdel($form,$id)
+    {
+        if($id){
+            $stat = $this->db->update('struct',$form,$id);
+        }else{
+            $id = $this->db->insert('struct',$form);
+            if($id){
+                $stat = 1;
+            }
+        }
+        return $stat;
+    }
 
+    function removeRazdel($id)
+    {
+        $st = $this->db->query("delete from struct where id=?d",$id);
+        $this->db->query("delete from blocks where parent_id=?d",$id);
+        //Переназначить картирки и фйлы
+        //$this->db->query('update ');
+        return $st;
+    }
 }

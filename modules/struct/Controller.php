@@ -34,12 +34,41 @@ class Controller extends ControllerBase{
     
     function adminRazdels($param)
     {
-        pr($param);
+        $list = \core\Core::$app->getStruct();
+        echo $this->render('admin/razdels',[
+            'list'=>$list
+        ]);
     }
     
     function adminBlocks()
     {
         echo $this->render('admin/blocks');
+    }
+    
+    function adminAjaxEditStruct($send)
+    {
+        $page = $this->model->getPage($send['id']);
+        echo $this->render('admin/editStruct',[
+            'page'=>$page
+        ]);
+    }
+    
+    function adminAjaxReloadStruct()
+    {
+        echo $this->render('admin/razdelsList',[
+            'list'=>\core\Core::$app->getStruct()
+        ]);
+    }
+    
+    function adminAjaxControlEdit($send)
+    {
+        $stat = $this->model->saveRazdel($send['form'],$send['id']);
+        return ['stat'=>$stat];
+    }
+    
+    function adminAjaxRemovePage($send)
+    {
+        $this->model->removeRazdel($send['id']);
     }
     
     function ajaxGetBlockParam($send)

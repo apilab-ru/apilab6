@@ -5,6 +5,8 @@ function struct(){
     this.nav = null;
     this.alias = null;
     
+    this.ajax = admin.ajax('struct');
+    
     this.selectNav = function(id,alias,myb){
         $('#page').attr({src:alias});
         self.nav = id;
@@ -181,6 +183,68 @@ function struct(){
             html+= "<option value='"+n+"' "+((n==check)?'selected':'')+" >"+name+"</option>";
         });
         return html;
+    }
+    
+    this.initRazdels = function(){
+        regRes.load('nestable',function(){
+            $('.structList')
+                .nestable()
+                .on('change', function() {
+                    var list = $('.structList').nestable('serialize');
+                    console.log('list',list);
+                });
+        })
+    }
+    
+    this.reloadStruct = function(){
+        self.ajax('reloadStruct',{},function(re){
+            $('.pageContentBox').html(re);
+            struct.initRazdels();
+        });
+    }
+    
+    this.controlEdit = function(id,myb){
+        if(id==0){
+            var title = 'Создание раздела';
+        }else{
+            var title= 'Редактирование раздела '+id;
+        }
+        var $win = self.createPop(title,null);
+        self.ajax('editStruct',{id:id},function(re){
+            $win.update( re );
+        });
+        $win.on('change','[name=name]',function(){
+            if($win.find('[name=alias]').val() == '' && id!=2){
+                admin.translete($(this).val(),function(re){
+                    $win.find('[name=alias]').val(re);
+                });
+            }
+        })
+        $win.on('submit','form',function(event){
+            event.preventDefault();
+            var form = self.serialize($(this));
+            self.loader( $(this).find('.submitForm') );
+            self.ajax('controlEdit',{form:form,id:id},function(re,mas){
+                console.log(re,mas);
+                if(mas.stat){
+                    self.reloadStruct();
+                    $win.close();
+                }else{
+                    popUp('Ошибка');
+                }
+            })
+        })
+    }
+    
+    this.controlRemove = function(id,myb){
+        var $par = $(myb).parents('li:first');
+        if($par.find('li').length > 0){
+            popUp('Нельзя удалить раздел с вложенными разделами');
+            return false;
+        }else{
+            $par.remove();
+            self.ajax('removePage',{id:id});
+        }
     }
 }
 struct.prototype = base;

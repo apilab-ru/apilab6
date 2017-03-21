@@ -79,3 +79,9 @@
 .editBlock .line.config:empty{
     display: none;
 }
+
+.dd-content a {
+    float: right;
+    margin: 2px 5px;
+    cursor: pointer;
+}

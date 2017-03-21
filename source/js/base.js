@@ -191,6 +191,25 @@ function base(){
 
         return $div;
     }
+    
+    this.serialize = function($form){
+        var data = {};
+        $form.find('input[type=text],textarea,select').each(function(n,i){
+            var name = $(i).attr('name');
+            data[name] = $(i).val();
+        });
+        $form.find('input[type=checkbex],input[type=radio]').each(function(n,i){
+            var name = $(i).attr('name');
+            if( $(i).prop('checked') ){
+                 data[name] = $(i).val();
+            }else{
+                data[name] = 0;
+            }
+        });
+        return data;
+    }
+    
+    this.loader = function(){}
 }
 base = new base();
 
