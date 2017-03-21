@@ -48,9 +48,16 @@ class Controller extends \core\controllers\ControllerBase
         echo $this->getContent($send['module'],$send['action'],$send['param'],$send['prev']);
     }
     
-    function ajaxModule($send){
+    function ajaxModule($send)
+    {
         $module = $send['module'];
         return $this->model->core->module->$module->adminAjax($send['action'],$send['param'],$send['param']);
+    }
+    
+    function ajaxTranslete($send)
+    {
+        $res = \core\utils\Translete::run($send['word']);
+        return ['res'=>$res];
     }
     
 }
