@@ -33,6 +33,10 @@ return [
                 "ui"=>[
                     "/core/libs/ui/jquery-ui.min.js",
                     "/core/libs/ui/init.js"
+                ],
+                "nestable"=>[
+                    "/core/libs/nestable/jquery.nestable.js",
+                    "/core/libs/nestable/init.js"
                 ]
            ]
         ]
