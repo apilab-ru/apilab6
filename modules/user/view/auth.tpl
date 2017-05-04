@@ -88,7 +88,7 @@
             <div class="submitLine">
                 <button> Войти </button>
             </div>
-            <div id="vk_auth" class="vkAuth"></div>
+            {*<div id="vk_auth" class="vkAuth"></div>*}
         </form>
         <div id="error"></div>
         

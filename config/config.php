@@ -40,5 +40,6 @@ return [
         "struct"=>[],
         "html"=>[]
     ],
+    "api"=> include 'api.php',
     "version"=>"6.0.1"
 ];
